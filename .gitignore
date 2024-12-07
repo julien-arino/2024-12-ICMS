@@ -47,3 +47,13 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# TeX related stuff
+*.blg
+*.log
+*.nav
+*.snm
+*.syntex.gz
+*.toc
+*.vrb
+
