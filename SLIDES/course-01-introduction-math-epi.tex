@@ -56,7 +56,7 @@
 
 \title{Introduction to epidemiology and mathematical epidemiology}
 \subtitle{ICMS -- Course 01}
-\date{December 2024}
+%\date{December 2024}
 \author{\texorpdfstring{Julien Arino\newline University of Manitoba\newline\url{julien.arino@umanitoba.ca}}{Julien Arino}}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
@@ -65,8 +65,8 @@
 %% TITLE AND OUTLINE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\titlepagewithfigure{FIGS-transitions/population-models-Gemini_Generated_Image_r55bcer55bcer55b.jpeg}
-\outlinepage{FIGS-transitions/population-models-Gemini_Generated_Image_r55bccr55bccr55b.jpeg}
+\titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_4oxcef4oxcef4oxc.jpeg}
+\outlinepage{FIGS-slides-admin/Gemini_Generated_Image_tzvf9ztzvf9ztzvf.jpeg}
 
 
 
@@ -75,11 +75,15 @@
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \section{Epidemiology}
-\newSectionSlide{FIGS-transitions/population-models-Gemini_Generated_Image_r55bccr55bccr55b.jpeg}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \subsection{Definition}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+
+
 \begin{frame}{Definition}
 
 \begin{itemize}
@@ -101,6 +105,7 @@ Epidemiology is the scientific discipline that focuses on the study of the distr
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \subsection{Who, when and where}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 
 
 \begin{frame}{Who, when and where}
@@ -245,6 +250,8 @@ Period & Phase & Description \\
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \subsection{Fighting against infections}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
 
 \begin{frame}{Fighting against infections}
 \begin{quote}
@@ -290,6 +297,7 @@ At the time, \defword{herd immunity} was not understood so this was for personal
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \section{Mathematical Epidemiology}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 
 \begin{frame}{The domain is quite old ..}
 .. but has only become a thing in recent years!
@@ -298,6 +306,8 @@ At the time, \defword{herd immunity} was not understood so this was for personal
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \subsection{The early years}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
 \begin{frame}{Daniel Bernoulli (1760)}
 \begin{minipage}{0.5\textwidth}
     \includegraphics[width=\textwidth]{FIGS/Bernoulli-1760-first_page.jpg}
@@ -367,6 +377,8 @@ At the time, \defword{herd immunity} was not understood so this was for personal
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \subsection{Computational epidemiology}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
 
 \begin{frame}{A more recent trend}
 \bbullet Some rare numerical work $\leq$ 1980s, mostly simulation of math models
@@ -398,6 +410,8 @@ At the time, \defword{herd immunity} was not understood so this was for personal
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \subsection{Use of data in mathematical epidemiology}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
 
 \begin{frame}{Has happened all along, undergoing a transformation}
 \bbullet Epidemiology has long relied on data
@@ -420,6 +434,8 @@ At the time, \defword{herd immunity} was not understood so this was for personal
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \section{Compartmental models}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
 
 \begin{frame}{Compartmental models}
 \bbullet Have become synonymous with epidemiological models
@@ -480,6 +496,8 @@ At the time, \defword{herd immunity} was not understood so this was for personal
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \section{The Kermack-McKendrick SIR model without demography}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
 
 \begin{frame}{Paper series worth reading}
 Model here is a particular case in
@@ -511,6 +529,9 @@ If we are interested in the possibility that an epidemic occurs
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \subsection{The model}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+
 \begin{frame}{The Kermack-McKendrick SIR model without demography}
 \bbullet The period of time under consideration is sufficiently short that demography can be neglected (we also say the model has \emph{no vital dynamics})
 \vfill
@@ -607,6 +628,8 @@ As indicated, we often drop dependence on $t$ of the state variables; we also wr
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \subsection{Mathematical analysis}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
 
 \begin{frame}{Reduction of the model}
   3 compartments, but when considered in detail, we notice that \emph{removed} do not have a direct influence on the dynamics of $S$ or $I$, in the sense that $R$ does not appear in \eqref{sys:KMK_dS} or \eqref{sys:KMK_dI}
@@ -810,7 +833,7 @@ Clearly, this cannot be true with \eqref{sys:KMK}
 Trajectories of \eqref{sys:KMK_2d} in $(S,I)$-space, normalised, with IC $(S_0,1-S_0)$ and $\beta/\gamma=2.5$
 \vfill
 \begin{center}
-\includegraphics[width=\textwidth]{FIGS/lecture-01-KMK_SI_plane}
+\includegraphics[width=\textwidth]{FIGS/course-01-KMK_SI_plane-1.pdf}
 \end{center}
 \end{frame}
 
@@ -899,7 +922,7 @@ main = TeX("Kermack-McKendrick SIR, $R_0=1.5$"),
 xlab = "Time (days)", ylab = "Prevalence")
 \end{lstlisting}
 \begin{center}
-\includegraphics[width=\textwidth]{FIGS/lecture-01-KMK_R0eq1dot5}
+\includegraphics[width=\textwidth]{FIGS/course-01-KMK_R0eq1dot5-1.pdf}
 \end{center}
 \end{frame}
 
@@ -938,6 +961,7 @@ xlab = "Time (days)", ylab = "Prevalence")
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The final size of an epidemic}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 
 \begin{frame}{Final size of an epidemic}
   For a nonnegative valued integrable function $w(t)$, denote
@@ -1196,7 +1220,7 @@ text(x = S_inf$root, y = 0, labels = "S_inf", adj = c(-0.25,-1))
 
 \begin{frame}{$\R_0=0.8$}
 \begin{center}
-  \includegraphics[width=\textwidth]{FIGS/lecture-01-KMK_final_size_0p8}
+  \includegraphics[width=\textwidth]{FIGS/course-01-KMK_final_size_0p8-1.pdf}
 \end{center}
 \end{frame}
 
@@ -1225,7 +1249,7 @@ text(x = S_inf$root, y = 0, labels = "S_inf", adj = c(-0.25,-1))
 
 \begin{frame}{$\R_0=2.4$}
   \begin{center}
-    \includegraphics[width=\textwidth]{FIGS/lecture-01-KMK_final_size_2p5}
+    \includegraphics[width=\textwidth]{FIGS/course-01-KMK_final_size_2p5-1.pdf}
   \end{center}
 \end{frame}
 
@@ -1276,7 +1300,7 @@ print(p)
 
 \begin{frame}{Attack rate (in \%)}
   \begin{center}
-    \includegraphics[width=\textwidth]{FIGS/lecture-01-KMK_attack_rate}
+    \includegraphics[width=\textwidth]{FIGS/course-01-KMK_attack_rate-1.pdf}
   \end{center}
 \end{frame}
 
@@ -1284,6 +1308,8 @@ print(p)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Herd immunity}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
 
 \begin{frame}{The simplest vaccination model}
 To implement vaccination in KMK, assume that vaccination reduces the number of susceptibles
@@ -1346,6 +1372,7 @@ To make $\R_{\text{v}}$ less than 1
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \section{The endemic SIRS model with demography}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
@@ -1554,6 +1581,7 @@ Thus there are 3 possibilities:
 %%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%
 \subsection{Mathematical analysis}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 
 
 \begin{frame}{Is the system well-posed?} 
@@ -1852,6 +1880,7 @@ In other words
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Some numerics}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 
 
 \begin{frame}[fragile]
@@ -1929,16 +1958,13 @@ plot(sol_SIRS[,"time"], sol_SIRS[,"I"],
 \hlkwd{plot}\hldef{(sol_SIRS[,}\hlsng{"time"}\hldef{], sol_SIRS[,}\hlsng{"I"}\hldef{],}
      \hlkwc{type} \hldef{=} \hlsng{"l"}\hldef{,} \hlkwc{lwd} \hldef{=} \hlnum{2}\hldef{,}
      \hlkwc{xlab} \hldef{=} \hlsng{"Time (days)"}\hldef{,} \hlkwc{ylab} \hldef{=} \hlsng{"Prevalence"}\hldef{)}
-\hlkwd{crop_figure}\hldef{(}\hlsng{"FIGS/lecture-01-SIRS_one_sim_prevalence"}\hldef{)}
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in crop\_figure("{}FIGS/lecture-01-SIRS\_one\_sim\_prevalence"{}): could not find function "{}crop\_figure"{}}}\end{kframe}
+\end{kframe}
 \end{knitrout}
 
 \begin{frame}{}
   \begin{center}
-    \includegraphics[width=\textwidth]{FIGS/lecture-01-SIRS_one_sim_prevalence}
+    \includegraphics[width=\textwidth]{FIGS/course-01-SIRS_one_sim_prevalence-1.pdf}
   \end{center}
 \end{frame}
 
@@ -2050,7 +2076,7 @@ Let us make things a bit better. See the \href{https://raw.githubusercontent.com
 
 \begin{frame}{}
   \begin{center}
-    \includegraphics[width=\textwidth]{FIGS/lecture-01-SIRS_3_sims_prevalence}
+    \includegraphics[width=\textwidth]{FIGS/course-01-SIRS_3_sims_prevalence-1.pdf}
   \end{center}
 \end{frame}
 
@@ -2094,7 +2120,7 @@ We saw that when $\R_0<1$, $I\to 0$, whereas when $\R_0>1$, $I\to (1-1/\R_0)N$. 
 
 \begin{frame}
   \begin{center}
-    \includegraphics[width=\textwidth]{FIGS/lecture-01-SIRS_bifurcation_R0}
+    \includegraphics[width=\textwidth]{FIGS/course-01-SIRS_bifurcation_R0-1.pdf}
   \end{center}
 \end{frame}
 
@@ -2103,6 +2129,7 @@ We saw that when $\R_0<1$, $I\to 0$, whereas when $\R_0>1$, $I\to (1-1/\R_0)N$. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{An SIRS model with vaccination}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 
 \begin{frame}{An SIRS model with vaccination}
 Take SIRS model \eqref{sys:SIRS} and assume the following
@@ -2248,6 +2275,7 @@ So we define
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Last remarks}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_hz99k3hz99k3hz99.jpeg}
 
 \begin{frame}{To simplify or not to simplify?}
 \bbullet In the KMK epidemic model \eqref{sys:KMK} and the SIRS endemic model \eqref{sys:SIRS}, since the total population is constant or asymptotically constant, it is possible to omit one of the state variables since $N^\star=S+I+R$
