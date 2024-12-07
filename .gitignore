@@ -49,11 +49,13 @@ po/*~
 rsconnect/
 
 # TeX related stuff
+*.bbl
 *.blg
 *.log
 *.nav
 *.snm
-*.syntex.gz
+*.synctex.gz
+*-concordance.tex
 *.toc
 *.vrb
 
