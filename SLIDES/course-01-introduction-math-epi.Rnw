@@ -3813,6 +3813,10 @@ Used for instance to model Giardia transmission from possums to humans
 \bbullet The KMK SIR has explicit solutions (in some sense). \textbf{This is an exception!}
 \vfill
 \bbullet An \emph{endemic} SIRS model in which the threshold $\R_0=1$ is such that, when $\R_0<1$, the disease goes extinct, whereas when $\R_0>1$, the disease becomes established in the population
+\vfill
+\bbullet Some simple variations on these models
+\vfill
+\bbullet A few models for vector-borne or water-borne diseases
 \end{frame}
 
 
