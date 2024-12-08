@@ -79,7 +79,7 @@
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \subsection{Brief remarks about terminology}
-\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_9agynl9agynl9agy.jpeg}
 
 \begin{frame}{Incidence \& Prevalence (when?)}
 \defword{Incidence}: number of new cases in a population generated within a certain time period
@@ -260,7 +260,7 @@ That paper was followed by a series of ``Contributions to the mathematical theor
 \vfill
 \bbullet Many epidemiological models are compartmental models, but the development of compartmental models in the 1970-1980s was not at all specific to epidemiology
 \vfill
-\bbullet See in particular the works of John Jacquez, Carl Simon, GG Walter
+\bbullet See in particular the works of \href{https://www.semanticscholar.org/author/J.-Jacquez/2321059}{John Jacquez}, \href{https://scholar.google.ca/citations?user=dv_z_mAAAAAJ}{Carl Simon}, GG Walter
 \vfill
 \bbullet Unjustly fell into disuse: there are some very nice results in the area    
 \end{frame}
@@ -3044,6 +3044,55 @@ SI & $ \frac{\bar f_I}{d+\gamma}$
 }
 
 
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{A better vaccination model?}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\maxFrameImage{FIGS/ArinoMccluskeyPvdD.png}
+
+\begin{frame}{SLIRS with vaccination}
+\centering
+  \def\skip{*2.5}
+  \begin{tikzpicture}[scale=1.5, transform shape]
+    %% Regular nodes
+    \node [circle, fill=green!50, text=black] at (0,0) (S) {$S$};
+    \node [circle, fill=red!90, text=black] at (1\skip,0) (I) {$I$};
+    \node [circle, fill=blue!50, text=black] at (2\skip,0) (R) {$R$};
+    \node [circle, fill=red!50, text=black] at (0.5\skip,-1\skip) (V) {$V$};
+    %% Fake nodes for arrows
+    \node [left=0.75cm of S] (birth) {};
+    \node [below=0.5cm of S] (dS) {};
+    \node [below=0.5cm of I] (dI) {};
+    \node [below=0.5cm of R] (dR) {};
+    \node [below=0.5cm of V] (dV) {};
+    %% Flows (demography)
+    \path [line, very thick] (birth) to node [midway, above] (TextNode) {$b$} (S);
+    \path [line, very thick] (S) to node [midway, left] (TextNode) {$dS$} (dS);
+    \path [line, very thick] (I) to node [midway, right] (TextNode) {$dI$} (dI);
+    \path [line, very thick] (R) to node [midway, left] (TextNode) {$dR$} (dR);
+    \path [line, very thick] (V) to node [midway, left] (TextNode) {$dV$} (dV);
+    %% Flows
+    \path [line, very thick] (S) to node [midway, above] (TextNode) {$\beta SI/N$} (I);
+    \path [line, very thick, bend left=10] (S) to node [near start, right] (TextNode) {$\phi S$} (V);
+    \path [line, very thick, bend left=10] (V) to node [near start, left] (TextNode) {$\varphi V$} (S);
+    \path [line, very thick] (V) to node [midway, above, sloped] (TextNode) {$\sigma\beta SI/N$} (I);
+    \path [line, very thick] (I) to node [midway, above] (TextNode) {$\gamma I$} (R);
+    \draw [>=latex,->, thick, rounded corners] (R) -- (2\skip,0.75) -- (0,0.75) node[midway,above,sloped] {$\nu R$} -- (S);
+  \end{tikzpicture}    
+\end{frame}
+
+\begin{frame}{The usual situation}
+\centering
+\includegraphics[width=0.7\textwidth]{FIGS/SIRV_bif_forward}
+\end{frame}
+
+\begin{frame}{What can happen with vaccination -- Backward bifurcation}
+\centering
+\includegraphics[width=0.7\textwidth]{FIGS/SIRV_bif_backward}
+\end{frame}
+
+
 %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%
 \subsection{Global properties of the SLIRS model}
@@ -3184,61 +3233,12 @@ Then there are no closed rectifiable curve that is invariant under \eqref{sys:SL
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{A better vaccination model}
-\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
-
-\maxFrameImage{FIGS/ArinoMccluskeyPvdD.png}
-
-\begin{frame}{SLIRS with vaccination}
-\centering
-  \def\skip{*2.5}
-  \begin{tikzpicture}[scale=1.5, transform shape]
-    %% Regular nodes
-    \node [circle, fill=green!50, text=black] at (0,0) (S) {$S$};
-    \node [circle, fill=red!90, text=black] at (1\skip,0) (I) {$I$};
-    \node [circle, fill=blue!50, text=black] at (2\skip,0) (R) {$R$};
-    \node [circle, fill=red!50, text=black] at (0.5\skip,-1\skip) (V) {$V$};
-    %% Fake nodes for arrows
-    \node [left=0.75cm of S] (birth) {};
-    \node [below=0.5cm of S] (dS) {};
-    \node [below=0.5cm of I] (dI) {};
-    \node [below=0.5cm of R] (dR) {};
-    \node [below=0.5cm of V] (dV) {};
-    %% Flows (demography)
-    \path [line, very thick] (birth) to node [midway, above] (TextNode) {$b$} (S);
-    \path [line, very thick] (S) to node [midway, left] (TextNode) {$dS$} (dS);
-    \path [line, very thick] (I) to node [midway, right] (TextNode) {$dI$} (dI);
-    \path [line, very thick] (R) to node [midway, left] (TextNode) {$dR$} (dR);
-    \path [line, very thick] (V) to node [midway, left] (TextNode) {$dV$} (dV);
-    %% Flows
-    \path [line, very thick] (S) to node [midway, above] (TextNode) {$\beta SI/N$} (I);
-    \path [line, very thick, bend left=10] (S) to node [near start, right] (TextNode) {$\phi S$} (V);
-    \path [line, very thick, bend left=10] (V) to node [near start, left] (TextNode) {$\varphi V$} (S);
-    \path [line, very thick] (V) to node [midway, above, sloped] (TextNode) {$\sigma\beta SI/N$} (I);
-    \path [line, very thick] (I) to node [midway, above] (TextNode) {$\gamma I$} (R);
-    \draw [>=latex,->, thick, rounded corners] (R) -- (2\skip,0.75) -- (0,0.75) node[midway,above,sloped] {$\nu R$} -- (S);
-  \end{tikzpicture}    
-\end{frame}
-
-\begin{frame}{The usual situation}
-\centering
-\includegraphics[width=0.7\textwidth]{FIGS/SIRV_bif_forward}
-\end{frame}
-
-\begin{frame}{What can happen with vaccination -- Backward bifurcation}
-\centering
-\includegraphics[width=0.7\textwidth]{FIGS/SIRV_bif_backward}
-\end{frame}
-
-
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
-\section{A few other models}
-\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+\section{What if there's another guest at the party?}
+\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_4ls25f4ls25f4ls2.jpeg}
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
@@ -3671,6 +3671,10 @@ Used for instance to model Giardia transmission from possums to humans
 \bbullet The KMK SIR has explicit solutions (in some sense). \textbf{This is an exception!}
 \vfill
 \bbullet An \emph{endemic} SIRS model in which the threshold $\R_0=1$ is such that, when $\R_0<1$, the disease goes extinct, whereas when $\R_0>1$, the disease becomes established in the population
+\vfill
+\bbullet Some simple variations on these models
+\vfill
+\bbullet A few models for vector-borne or water-borne diseases
 \end{frame}
 
 
