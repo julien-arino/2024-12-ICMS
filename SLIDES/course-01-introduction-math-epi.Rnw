@@ -312,6 +312,8 @@ That paper was followed by a series of ``Contributions to the mathematical theor
 \section{Kermack-McKendrick-type epidemic models}
 \newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 
+\maxFrameImage{FIGS/KMK-title-page}
+
 
 \begin{frame}{What is the \emph{size} of an epidemic?}
 \bbullet 
@@ -329,6 +331,8 @@ If we are interested in the possibility that an epidemic occurs
 %%%%%%%%%%%%%%%%%%%%
 \subsection{The Kermack-McKendrick (KMK) model}
 \newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\maxFrameImage{FIGS/KMK-model-in-paper}
 
 
 \begin{frame}{The Kermack-McKendrick SIR model without demography}
@@ -3375,12 +3379,13 @@ Then there are no closed rectifiable curve that is invariant under \eqref{sys:SL
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
-\section{Vector-borne diseases}
+\section{A few other models}
 \newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
-\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 \subsection{Two Ross-Macdonald-type models}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_4ls25f4ls25f4ls2.jpeg}
 \begin{frame}
 See, e.g., Simoy \& Aparicio, \href{https://doi.org/10.1016/j.actatropica.2020.105452}{Ross-Macdonald models: Which one should we use?}, \emph{Acta Tropica} (2020)
 \vfill
@@ -3518,7 +3523,7 @@ are the fractions of latent individuals (of type $X=\{V,H\}$) who survive the la
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \subsection{A little complexification of Ross-Macdonald}
-\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_mco1ecmco1ecmco1.jpeg}
 
 \begin{frame}{Recall this guy?}
 \centering
@@ -3668,12 +3673,6 @@ Need models that are able to account for that, because ODEs are not really good 
 Mathematics becomes more complicated
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-\section{A few other models}
-\newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \subsection{A model for zoonotic transmission of waterborne disease}
