@@ -453,6 +453,7 @@ minimum height=2em]
 
 % The title page with figure
 \newcommand{\titlepagewithfigure}[1]{%
+%\makeatletter
 \begin{frame}[noframenumbering,plain]
   \begin{tikzpicture}[remember picture,overlay]
     \node[above right,inner sep=0pt,opacity=0.2] at (current page.south west)
@@ -473,10 +474,10 @@ minimum height=2em]
     at (current page.south) 
     {The University of Manitoba campuses are located on original lands of Anishinaabeg, Ininew, Anisininew, Dakota and Dene peoples, and on the National Homeland of the Red River Métis.\\
     We respect the Treaties that were made on these territories, we acknowledge the harms and mistakes of the past, and we dedicate ourselves to move forward in partnership with Indigenous communities in a spirit of Reconciliation and collaboration.};  
-    \node[align=center, anchor=south,
-    above=0.5cm of land_acknowledgement,
-    text=black,
-    font=\bfseries] {Fall 2024};
+    % \node[align=center, anchor=south,
+    % above=0.5cm of land_acknowledgement,
+    % text=black,
+    % font=\bfseries] {\@date};
 \end{tikzpicture}
   \setbeamercolor{title}{fg=subsub_header_section}
   \setbeamercolor{author}{fg=subsub_header_section} 
@@ -486,6 +487,7 @@ minimum height=2em]
 	\titlepage
 \end{frame}
 \addtocounter{page}{-1}
+%\makeatother
 }
 
 
