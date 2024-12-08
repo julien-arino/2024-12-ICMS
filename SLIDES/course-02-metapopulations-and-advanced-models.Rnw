@@ -26,7 +26,7 @@ opts_chunk$set(echo = TRUE,
                dev = c("pdf", "png"),
                fig.width = 6, 
                fig.height = 4, 
-               fig.path = "FIGS/course-01-",
+               fig.path = "FIGS/course-02-",
                fig.keep = "high",
                fig.show = "hide")
 knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
@@ -75,11 +75,6 @@ cat(input_setup)
 \newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 
 
-%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%
-\subsection{Spatio-temporal spread}
-\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
-
 \frame{\frametitle{Diseases have been known to be mobile for a while}
 \framesubtitle{The plague of Athens of 430 BCE}
 \begin{minipage}{0.7\textwidth}
@@ -103,59 +98,18 @@ History of the Peloponnesian War
 \end{minipage}
 }
 
-\begin{frame}{Pathogen spread has evolved with mobility}
-Pathogens use trade routes 
-\vfill 
-In ancient times, trade routes were ``simple''
-\end{frame}
-
-\maxFrameImage{FIGS/trade_routes_1478AD}
-\maxFrameImage{FIGS/population-moyen-age-grande-peste-carte}
-\maxFrameImage{FIGS/RossOnWye_plagueCross}
-\maxFrameImage{FIGS/RossOnWye_plagueCross_zoom}
-
-
-\begin{frame}{Pathogen spread has evolved with mobility}
-Pathogens use trade routes 
-\vfill 
-With the acceleration and globalization of mobility, things are changing
-\end{frame}
-
-\maxFrameImage{FIGS/MapOfFranceWithHenriIV}
-\maxFrameImage{FIGS/LiverpoolToWinnipeg}
-\maxFrameImage{FIGS/travelTimesFromWinnipeg}
-\maxFrameImage{FIGS/duration_Paris_Bordeaux}
-\maxFrameImage{FIGS/traveltimes_france_tgv}
-\maxFrameImage{FIGS/TravelTimesFromMX}
-
-\begin{frame}{Scale of modern mobility difficult to apprehend}
+\begin{frame}{Scale of mobility difficult to apprehend ... but mobility is critical}
 \begin{block}{Working definition}
 \textbf{Mobility} is the collection of processes through which individuals change their current location
 \end{block}
 \vfill
-Takes many different forms \vfill Evolves constantly \vfill  Numbers are
-.. colossal
-\end{frame}
-
-\maxFrameImage{FIGS/passengers_transported_worldwide}
-
-\begin{frame}{Why mobility is important in the context of health}
-
 \begin{block}{}
 All migrants/travellers carry with them their ``health history''
 \end{block}
-\begin{itemize}
-\item latent and/or active infections (TB, H1N1, polio)
-\item immunizations (schedules vary by country)
-\item health/nutrition practices (KJv)
-\item treatment methods (antivirals)
-\end{itemize}
+\vfill
 \begin{block}{}
 Pathogens ignore borders and politics
 \end{block}     
-\begin{itemize}
-\item e.g., antiviral treatment policies for Canada and USA
-\end{itemize}
 \end{frame}
 	
 
@@ -2182,36 +2136,36 @@ Exploit vector structure
 \end{frame}
 
 \begin{frame}[fragile]{Set up parameters}
-\begin{lstlisting}
+<<>>=
 pop = c(34.017, 1348.932, 1224.614, 173.593, 93.261) * 1e+06
 countries = c("Canada", "China", "India", "Pakistan", "Philippines")
 T = matrix(data = 
-				c(0, 1268, 900, 489, 200, 
-				1274, 0, 678, 859, 150, 
-				985, 703, 0, 148, 58, 
-				515, 893, 144, 0, 9, 
-				209, 174, 90, 2, 0), 
-			nrow = 5, ncol = 5, byrow = TRUE)	
-\end{lstlisting}
+             c(0, 1268, 900, 489, 200, 
+               1274, 0, 678, 859, 150, 
+               985, 703, 0, 148, 58, 
+               515, 893, 144, 0, 9, 
+               209, 174, 90, 2, 0), 
+           nrow = 5, ncol = 5, byrow = TRUE)	
+@
 \end{frame}
 
 \begin{frame}[fragile]{Work out movement matrix}
-\begin{lstlisting}
+Use the approximation explained in Arino \& Portet (JMB 2015)
+<<>>=
 p = list()
-# Use the approximation explained in Arino & Portet (JMB 2015)
 p$M = mat.or.vec(nr = dim(T)[1], nc = dim(T)[2])
 for (from in 1:5) {
-	for (to in 1:5) {
-	p$M[to, from] = -log(1 - T[from, to]/pop[from])
-	}
-	p$M[from, from] = 0
+  for (to in 1:5) {
+    p$M[to, from] = -log(1 - T[from, to]/pop[from])
+  }
+  p$M[from, from] = 0
 }
 p$M = p$M - diag(colSums(p$M))
-\end{lstlisting}	
+@
 \end{frame}
 
 \begin{frame}[fragile]
-\begin{lstlisting}
+<<>>=
 p$P = dim(p$M)[1]
 p$eta = rep(0.3, p$P)
 p$epsilon = rep((1/1.5), p$P)
@@ -2220,22 +2174,22 @@ p$gammaI = rep((1/5), p$P)
 p$gammaA = rep((1/3), p$P)
 # The desired values for R_0
 R_0 = rep(1.5, p$P)
-\end{lstlisting}	
+@	
 \end{frame}
 
 \begin{frame}[fragile]{Write down indices of the different state variable types}
 	Save index of state variable types in state variables vector (we have to use a vector and thus, for instance, the name ``S'' needs to be defined)
-\begin{lstlisting}
+<<>>=
 p$idx_S = 1:p$P
 p$idx_L = (p$P+1):(2*p$P)
 p$idx_I = (2*p$P+1):(3*p$P)
 p$idx_A = (3*p$P+1):(4*p$P)
 p$idx_R = (4*p$P+1):(5*p$P)
-\end{lstlisting}	
+@	
 \end{frame}
 
 \begin{frame}[fragile]{Set up IC and time}
-\begin{lstlisting}
+<<>>=
 # Set initial conditions. For example, we start with 2
 # infectious individuals in Canada.
 L0 = mat.or.vec(p$P, 1)
@@ -2248,7 +2202,7 @@ S0 = pop - (L0 + I0 + A0 + R0)
 IC = c(S = S0, L = L0, I = I0, A = A0, R = R0)
 # Time span of the simulation (5 years here)
 tspan = seq(from = 0, to = 5 * 365.25, by = 0.1)
-\end{lstlisting}	
+@
 \end{frame}
 
 
@@ -2261,16 +2215,18 @@ tspan = seq(from = 0, to = 5 * 365.25, by = 0.1)
 	+\frac{\pi_p\eta_p}{\gamma_{Ap}}
 	\right)^{-1}
 	$$ 
-\begin{lstlisting}
+<<>>=
 for (i in 1:p$P) {
-	p$beta[i] = 
-		R_0[i] / S0[i] * 1/((1 - p$pi[i])/p$gammaI[i] + p$pi[i] * p$eta[i]/p$gammaA[i])
+  p$beta[i] = 
+    R_0[i] / S0[i] * 1 / 
+    ((1 - p$pi[i])/p$gammaI[i] + 
+       p$pi[i] * p$eta[i]/p$gammaA[i])
 }
-\end{lstlisting}	
+@	
 \end{frame}
 
 \begin{frame}[fragile]{Define the vector field}
-\begin{lstlisting}[language=Renhanced]
+<<>>=
 SLIAR_metapop_rhs <- function(t, x, p) {
 	with(as.list(p), {
 		S = x[idx_S]
@@ -2280,16 +2236,16 @@ SLIAR_metapop_rhs <- function(t, x, p) {
 		R = x[idx_R]
 		N = S + L + I + A + R
 		Phi = beta * S * (I + eta * A) / N
-		dS = - Phi + MS \%*\% S
-		dL = Phi - epsilon * L + p$ML \%*\% L
-		dI = (1 - pi) * epsilon * L - gammaI * I + MI \%*\% I
-		dA = pi * epsilon * L - gammaA * A + MA \%*\% A
-		dR = gammaI * I + gammaA * A + MR \%*\% R
+		dS = - Phi + MS %*% S
+		dL = Phi - epsilon * L + p$ML %*% L
+		dI = (1 - pi) * epsilon * L - gammaI * I + MI %*% I
+		dA = pi * epsilon * L - gammaA * A + MA %*% A
+		dR = gammaI * I + gammaA * A + MR %*% R
 		dx = list(c(dS, dL, dI, dA, dR))
 		return(dx)
 	})
 }	
-\end{lstlisting}
+@
 \end{frame}
 	
 

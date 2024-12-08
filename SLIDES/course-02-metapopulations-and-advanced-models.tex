@@ -78,11 +78,6 @@
 \newSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 
 
-%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%
-\subsection{Spatio-temporal spread}
-\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
-
 \frame{\frametitle{Diseases have been known to be mobile for a while}
 \framesubtitle{The plague of Athens of 430 BCE}
 \begin{minipage}{0.7\textwidth}
@@ -106,59 +101,18 @@ History of the Peloponnesian War
 \end{minipage}
 }
 
-\begin{frame}{Pathogen spread has evolved with mobility}
-Pathogens use trade routes 
-\vfill 
-In ancient times, trade routes were ``simple''
-\end{frame}
-
-\maxFrameImage{FIGS/trade_routes_1478AD}
-\maxFrameImage{FIGS/population-moyen-age-grande-peste-carte}
-\maxFrameImage{FIGS/RossOnWye_plagueCross}
-\maxFrameImage{FIGS/RossOnWye_plagueCross_zoom}
-
-
-\begin{frame}{Pathogen spread has evolved with mobility}
-Pathogens use trade routes 
-\vfill 
-With the acceleration and globalization of mobility, things are changing
-\end{frame}
-
-\maxFrameImage{FIGS/MapOfFranceWithHenriIV}
-\maxFrameImage{FIGS/LiverpoolToWinnipeg}
-\maxFrameImage{FIGS/travelTimesFromWinnipeg}
-\maxFrameImage{FIGS/duration_Paris_Bordeaux}
-\maxFrameImage{FIGS/traveltimes_france_tgv}
-\maxFrameImage{FIGS/TravelTimesFromMX}
-
-\begin{frame}{Scale of modern mobility difficult to apprehend}
+\begin{frame}{Scale of mobility difficult to apprehend ... but mobility is critical}
 \begin{block}{Working definition}
 \textbf{Mobility} is the collection of processes through which individuals change their current location
 \end{block}
 \vfill
-Takes many different forms \vfill Evolves constantly \vfill  Numbers are
-.. colossal
-\end{frame}
-
-\maxFrameImage{FIGS/passengers_transported_worldwide}
-
-\begin{frame}{Why mobility is important in the context of health}
-
 \begin{block}{}
 All migrants/travellers carry with them their ``health history''
 \end{block}
-\begin{itemize}
-\item latent and/or active infections (TB, H1N1, polio)
-\item immunizations (schedules vary by country)
-\item health/nutrition practices (KJv)
-\item treatment methods (antivirals)
-\end{itemize}
+\vfill
 \begin{block}{}
 Pathogens ignore borders and politics
 \end{block}     
-\begin{itemize}
-\item e.g., antiviral treatment policies for Canada and USA
-\end{itemize}
 \end{frame}
 	
 
@@ -2167,7 +2121,7 @@ If $\R_0<1$, then the DFE is globally asymptotically stable
 
 %%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%
-\subsection{Computational considerations}
+\subsection{Computational aspects of metapopulation models}
 \newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 
 \begin{frame}
@@ -2185,73 +2139,93 @@ Exploit vector structure
 \end{frame}
 
 \begin{frame}[fragile]{Set up parameters}
-\begin{lstlisting}
-pop = c(34.017, 1348.932, 1224.614, 173.593, 93.261) * 1e+06
-countries = c("Canada", "China", "India", "Pakistan", "Philippines")
-T = matrix(data = 
-				c(0, 1268, 900, 489, 200, 
-				1274, 0, 678, 859, 150, 
-				985, 703, 0, 148, 58, 
-				515, 893, 144, 0, 9, 
-				209, 174, 90, 2, 0), 
-			nrow = 5, ncol = 5, byrow = TRUE)	
-\end{lstlisting}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{pop} \hlkwb{=} \hlkwd{c}\hldef{(}\hlnum{34.017}\hldef{,} \hlnum{1348.932}\hldef{,} \hlnum{1224.614}\hldef{,} \hlnum{173.593}\hldef{,} \hlnum{93.261}\hldef{)} \hlopt{*} \hlnum{1e+06}
+\hldef{countries} \hlkwb{=} \hlkwd{c}\hldef{(}\hlsng{"Canada"}\hldef{,} \hlsng{"China"}\hldef{,} \hlsng{"India"}\hldef{,} \hlsng{"Pakistan"}\hldef{,} \hlsng{"Philippines"}\hldef{)}
+\hldef{T} \hlkwb{=} \hlkwd{matrix}\hldef{(}\hlkwc{data} \hldef{=}
+             \hlkwd{c}\hldef{(}\hlnum{0}\hldef{,} \hlnum{1268}\hldef{,} \hlnum{900}\hldef{,} \hlnum{489}\hldef{,} \hlnum{200}\hldef{,}
+               \hlnum{1274}\hldef{,} \hlnum{0}\hldef{,} \hlnum{678}\hldef{,} \hlnum{859}\hldef{,} \hlnum{150}\hldef{,}
+               \hlnum{985}\hldef{,} \hlnum{703}\hldef{,} \hlnum{0}\hldef{,} \hlnum{148}\hldef{,} \hlnum{58}\hldef{,}
+               \hlnum{515}\hldef{,} \hlnum{893}\hldef{,} \hlnum{144}\hldef{,} \hlnum{0}\hldef{,} \hlnum{9}\hldef{,}
+               \hlnum{209}\hldef{,} \hlnum{174}\hldef{,} \hlnum{90}\hldef{,} \hlnum{2}\hldef{,} \hlnum{0}\hldef{),}
+           \hlkwc{nrow} \hldef{=} \hlnum{5}\hldef{,} \hlkwc{ncol} \hldef{=} \hlnum{5}\hldef{,} \hlkwc{byrow} \hldef{=} \hlnum{TRUE}\hldef{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 \end{frame}
 
 \begin{frame}[fragile]{Work out movement matrix}
-\begin{lstlisting}
-p = list()
-# Use the approximation explained in Arino & Portet (JMB 2015)
-p$M = mat.or.vec(nr = dim(T)[1], nc = dim(T)[2])
-for (from in 1:5) {
-	for (to in 1:5) {
-	p$M[to, from] = -log(1 - T[from, to]/pop[from])
-	}
-	p$M[from, from] = 0
-}
-p$M = p$M - diag(colSums(p$M))
-\end{lstlisting}	
+Use the approximation explained in Arino \& Portet (JMB 2015)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{p} \hlkwb{=} \hlkwd{list}\hldef{()}
+\hldef{p}\hlopt{$}\hldef{M} \hlkwb{=} \hlkwd{mat.or.vec}\hldef{(}\hlkwc{nr} \hldef{=} \hlkwd{dim}\hldef{(T)[}\hlnum{1}\hldef{],} \hlkwc{nc} \hldef{=} \hlkwd{dim}\hldef{(T)[}\hlnum{2}\hldef{])}
+\hlkwa{for} \hldef{(from} \hlkwa{in} \hlnum{1}\hlopt{:}\hlnum{5}\hldef{) \{}
+  \hlkwa{for} \hldef{(to} \hlkwa{in} \hlnum{1}\hlopt{:}\hlnum{5}\hldef{) \{}
+    \hldef{p}\hlopt{$}\hldef{M[to, from]} \hlkwb{=} \hlopt{-}\hlkwd{log}\hldef{(}\hlnum{1} \hlopt{-} \hldef{T[from, to]}\hlopt{/}\hldef{pop[from])}
+  \hldef{\}}
+  \hldef{p}\hlopt{$}\hldef{M[from, from]} \hlkwb{=} \hlnum{0}
+\hldef{\}}
+\hldef{p}\hlopt{$}\hldef{M} \hlkwb{=} \hldef{p}\hlopt{$}\hldef{M} \hlopt{-} \hlkwd{diag}\hldef{(}\hlkwd{colSums}\hldef{(p}\hlopt{$}\hldef{M))}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 \end{frame}
 
 \begin{frame}[fragile]
-\begin{lstlisting}
-p$P = dim(p$M)[1]
-p$eta = rep(0.3, p$P)
-p$epsilon = rep((1/1.5), p$P)
-p$pi = rep(0.7, p$P)
-p$gammaI = rep((1/5), p$P)
-p$gammaA = rep((1/3), p$P)
-# The desired values for R_0
-R_0 = rep(1.5, p$P)
-\end{lstlisting}	
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{p}\hlopt{$}\hldef{P} \hlkwb{=} \hlkwd{dim}\hldef{(p}\hlopt{$}\hldef{M)[}\hlnum{1}\hldef{]}
+\hldef{p}\hlopt{$}\hldef{eta} \hlkwb{=} \hlkwd{rep}\hldef{(}\hlnum{0.3}\hldef{, p}\hlopt{$}\hldef{P)}
+\hldef{p}\hlopt{$}\hldef{epsilon} \hlkwb{=} \hlkwd{rep}\hldef{((}\hlnum{1}\hlopt{/}\hlnum{1.5}\hldef{), p}\hlopt{$}\hldef{P)}
+\hldef{p}\hlopt{$}\hldef{pi} \hlkwb{=} \hlkwd{rep}\hldef{(}\hlnum{0.7}\hldef{, p}\hlopt{$}\hldef{P)}
+\hldef{p}\hlopt{$}\hldef{gammaI} \hlkwb{=} \hlkwd{rep}\hldef{((}\hlnum{1}\hlopt{/}\hlnum{5}\hldef{), p}\hlopt{$}\hldef{P)}
+\hldef{p}\hlopt{$}\hldef{gammaA} \hlkwb{=} \hlkwd{rep}\hldef{((}\hlnum{1}\hlopt{/}\hlnum{3}\hldef{), p}\hlopt{$}\hldef{P)}
+\hlcom{# The desired values for R_0}
+\hldef{R_0} \hlkwb{=} \hlkwd{rep}\hldef{(}\hlnum{1.5}\hldef{, p}\hlopt{$}\hldef{P)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 \end{frame}
 
 \begin{frame}[fragile]{Write down indices of the different state variable types}
 	Save index of state variable types in state variables vector (we have to use a vector and thus, for instance, the name ``S'' needs to be defined)
-\begin{lstlisting}
-p$idx_S = 1:p$P
-p$idx_L = (p$P+1):(2*p$P)
-p$idx_I = (2*p$P+1):(3*p$P)
-p$idx_A = (3*p$P+1):(4*p$P)
-p$idx_R = (4*p$P+1):(5*p$P)
-\end{lstlisting}	
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{p}\hlopt{$}\hldef{idx_S} \hlkwb{=} \hlnum{1}\hlopt{:}\hldef{p}\hlopt{$}\hldef{P}
+\hldef{p}\hlopt{$}\hldef{idx_L} \hlkwb{=} \hldef{(p}\hlopt{$}\hldef{P}\hlopt{+}\hlnum{1}\hldef{)}\hlopt{:}\hldef{(}\hlnum{2}\hlopt{*}\hldef{p}\hlopt{$}\hldef{P)}
+\hldef{p}\hlopt{$}\hldef{idx_I} \hlkwb{=} \hldef{(}\hlnum{2}\hlopt{*}\hldef{p}\hlopt{$}\hldef{P}\hlopt{+}\hlnum{1}\hldef{)}\hlopt{:}\hldef{(}\hlnum{3}\hlopt{*}\hldef{p}\hlopt{$}\hldef{P)}
+\hldef{p}\hlopt{$}\hldef{idx_A} \hlkwb{=} \hldef{(}\hlnum{3}\hlopt{*}\hldef{p}\hlopt{$}\hldef{P}\hlopt{+}\hlnum{1}\hldef{)}\hlopt{:}\hldef{(}\hlnum{4}\hlopt{*}\hldef{p}\hlopt{$}\hldef{P)}
+\hldef{p}\hlopt{$}\hldef{idx_R} \hlkwb{=} \hldef{(}\hlnum{4}\hlopt{*}\hldef{p}\hlopt{$}\hldef{P}\hlopt{+}\hlnum{1}\hldef{)}\hlopt{:}\hldef{(}\hlnum{5}\hlopt{*}\hldef{p}\hlopt{$}\hldef{P)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 \end{frame}
 
 \begin{frame}[fragile]{Set up IC and time}
-\begin{lstlisting}
-# Set initial conditions. For example, we start with 2
-# infectious individuals in Canada.
-L0 = mat.or.vec(p$P, 1)
-I0 = mat.or.vec(p$P, 1)
-A0 = mat.or.vec(p$P, 1)
-R0 = mat.or.vec(p$P, 1)
-I0[1] = 2
-S0 = pop - (L0 + I0 + A0 + R0)
-# Vector of initial conditions to be passed to ODE solver.
-IC = c(S = S0, L = L0, I = I0, A = A0, R = R0)
-# Time span of the simulation (5 years here)
-tspan = seq(from = 0, to = 5 * 365.25, by = 0.1)
-\end{lstlisting}	
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Set initial conditions. For example, we start with 2}
+\hlcom{# infectious individuals in Canada.}
+\hldef{L0} \hlkwb{=} \hlkwd{mat.or.vec}\hldef{(p}\hlopt{$}\hldef{P,} \hlnum{1}\hldef{)}
+\hldef{I0} \hlkwb{=} \hlkwd{mat.or.vec}\hldef{(p}\hlopt{$}\hldef{P,} \hlnum{1}\hldef{)}
+\hldef{A0} \hlkwb{=} \hlkwd{mat.or.vec}\hldef{(p}\hlopt{$}\hldef{P,} \hlnum{1}\hldef{)}
+\hldef{R0} \hlkwb{=} \hlkwd{mat.or.vec}\hldef{(p}\hlopt{$}\hldef{P,} \hlnum{1}\hldef{)}
+\hldef{I0[}\hlnum{1}\hldef{]} \hlkwb{=} \hlnum{2}
+\hldef{S0} \hlkwb{=} \hldef{pop} \hlopt{-} \hldef{(L0} \hlopt{+} \hldef{I0} \hlopt{+} \hldef{A0} \hlopt{+} \hldef{R0)}
+\hlcom{# Vector of initial conditions to be passed to ODE solver.}
+\hldef{IC} \hlkwb{=} \hlkwd{c}\hldef{(}\hlkwc{S} \hldef{= S0,} \hlkwc{L} \hldef{= L0,} \hlkwc{I} \hldef{= I0,} \hlkwc{A} \hldef{= A0,} \hlkwc{R} \hldef{= R0)}
+\hlcom{# Time span of the simulation (5 years here)}
+\hldef{tspan} \hlkwb{=} \hlkwd{seq}\hldef{(}\hlkwc{from} \hldef{=} \hlnum{0}\hldef{,} \hlkwc{to} \hldef{=} \hlnum{5} \hlopt{*} \hlnum{365.25}\hldef{,} \hlkwc{by} \hldef{=} \hlnum{0.1}\hldef{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 \end{frame}
 
 
@@ -2264,35 +2238,45 @@ tspan = seq(from = 0, to = 5 * 365.25, by = 0.1)
 	+\frac{\pi_p\eta_p}{\gamma_{Ap}}
 	\right)^{-1}
 	$$ 
-\begin{lstlisting}
-for (i in 1:p$P) {
-	p$beta[i] = 
-		R_0[i] / S0[i] * 1/((1 - p$pi[i])/p$gammaI[i] + p$pi[i] * p$eta[i]/p$gammaA[i])
-}
-\end{lstlisting}	
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwa{for} \hldef{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hldef{p}\hlopt{$}\hldef{P) \{}
+  \hldef{p}\hlopt{$}\hldef{beta[i]} \hlkwb{=}
+    \hldef{R_0[i]} \hlopt{/} \hldef{S0[i]} \hlopt{*} \hlnum{1} \hlopt{/}
+    \hldef{((}\hlnum{1} \hlopt{-} \hldef{p}\hlopt{$}\hldef{pi[i])}\hlopt{/}\hldef{p}\hlopt{$}\hldef{gammaI[i]} \hlopt{+}
+       \hldef{p}\hlopt{$}\hldef{pi[i]} \hlopt{*} \hldef{p}\hlopt{$}\hldef{eta[i]}\hlopt{/}\hldef{p}\hlopt{$}\hldef{gammaA[i])}
+\hldef{\}}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 \end{frame}
 
 \begin{frame}[fragile]{Define the vector field}
-\begin{lstlisting}[language=Renhanced]
-SLIAR_metapop_rhs <- function(t, x, p) {
-	with(as.list(p), {
-		S = x[idx_S]
-		L = x[idx_L]
-		I = x[idx_I]
-		A = x[idx_A]
-		R = x[idx_R]
-		N = S + L + I + A + R
-		Phi = beta * S * (I + eta * A) / N
-		dS = - Phi + MS \%*\% S
-		dL = Phi - epsilon * L + p$ML \%*\% L
-		dI = (1 - pi) * epsilon * L - gammaI * I + MI \%*\% I
-		dA = pi * epsilon * L - gammaA * A + MA \%*\% A
-		dR = gammaI * I + gammaA * A + MR \%*\% R
-		dx = list(c(dS, dL, dI, dA, dR))
-		return(dx)
-	})
-}	
-\end{lstlisting}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hldef{SLIAR_metapop_rhs} \hlkwb{<-} \hlkwa{function}\hldef{(}\hlkwc{t}\hldef{,} \hlkwc{x}\hldef{,} \hlkwc{p}\hldef{) \{}
+        \hlkwd{with}\hldef{(}\hlkwd{as.list}\hldef{(p), \{}
+                \hldef{S} \hlkwb{=} \hldef{x[idx_S]}
+                \hldef{L} \hlkwb{=} \hldef{x[idx_L]}
+                \hldef{I} \hlkwb{=} \hldef{x[idx_I]}
+                \hldef{A} \hlkwb{=} \hldef{x[idx_A]}
+                \hldef{R} \hlkwb{=} \hldef{x[idx_R]}
+                \hldef{N} \hlkwb{=} \hldef{S} \hlopt{+} \hldef{L} \hlopt{+} \hldef{I} \hlopt{+} \hldef{A} \hlopt{+} \hldef{R}
+                \hldef{Phi} \hlkwb{=} \hldef{beta} \hlopt{*} \hldef{S} \hlopt{*} \hldef{(I} \hlopt{+} \hldef{eta} \hlopt{*} \hldef{A)} \hlopt{/} \hldef{N}
+                \hldef{dS} \hlkwb{=} \hlopt{-} \hldef{Phi} \hlopt{+} \hldef{MS} \hlopt{%*%} \hldef{S}
+                \hldef{dL} \hlkwb{=} \hldef{Phi} \hlopt{-} \hldef{epsilon} \hlopt{*} \hldef{L} \hlopt{+} \hldef{p}\hlopt{$}\hldef{ML} \hlopt{%*%} \hldef{L}
+                \hldef{dI} \hlkwb{=} \hldef{(}\hlnum{1} \hlopt{-} \hldef{pi)} \hlopt{*} \hldef{epsilon} \hlopt{*} \hldef{L} \hlopt{-} \hldef{gammaI} \hlopt{*} \hldef{I} \hlopt{+} \hldef{MI} \hlopt{%*%} \hldef{I}
+                \hldef{dA} \hlkwb{=} \hldef{pi} \hlopt{*} \hldef{epsilon} \hlopt{*} \hldef{L} \hlopt{-} \hldef{gammaA} \hlopt{*} \hldef{A} \hlopt{+} \hldef{MA} \hlopt{%*%} \hldef{A}
+                \hldef{dR} \hlkwb{=} \hldef{gammaI} \hlopt{*} \hldef{I} \hlopt{+} \hldef{gammaA} \hlopt{*} \hldef{A} \hlopt{+} \hldef{MR} \hlopt{%*%} \hldef{R}
+                \hldef{dx} \hlkwb{=} \hlkwd{list}\hldef{(}\hlkwd{c}\hldef{(dS, dL, dI, dA, dR))}
+                \hlkwd{return}\hldef{(dx)}
+        \hldef{\})}
+\hldef{\}}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 \end{frame}
 	
 
