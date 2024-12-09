@@ -1252,7 +1252,7 @@ S_0(\ln S_0-\ln S_\infty) =
 \maxFrameImage{FIGS/Arino_etal-SLIAR-treatment-doses.png}
 \maxFrameImage{FIGS/Arino_etal-SLIAR-treatment-cases.png}
 \maxFrameImage{FIGS/Arino_etal-SLIAR-conclusions.png}
-
+\maxFrameImage{FIGS/dedication-Fred-Brauer-169}
 
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%
@@ -3829,9 +3829,9 @@ rmd_chunks_to_r_temp("course-01-introduction-math-epi.Rnw")
 \end{frame}
 
 \begin{frame}[fragile]\frametitle{About that \code{R} file}
-Source the file \code{basic-computational-analysis-1-functions.R} (in the \code{CODE} directory) in \code{R} to reproduce all the results in these slides
+Source the file \code{course-01-introduction-math-epi.R} (in the \code{CODE} directory) in \code{R} to reproduce all the results in these slides
 \vfill
-Some small changes are required; for instance, when sourcing (instead of knitting or interactively), \code{ggplot} figures are created but not printed, so in the \code{R} file, you need to print them ``manually''
+Some small changes are required; for instance, when sourcing (instead of knitting or interactively), some figures are created but not printed, so in the \code{R} file, you need to print them ``manually'' (set the output to some variable and \code{print} them)
 \vfill
 <<eval=FALSE>>=
 pp = ggplot(...)
