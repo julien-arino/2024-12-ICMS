@@ -88,18 +88,18 @@ for (i in 1:length(S)) {
          xlim = c(0,1), ylim = c(0,1),
          xaxs = "i", yaxs = "i",
          xlab = "S", ylab = "I",
-         col.axis = colour, cex.axis = 2,
-         col.lab = colour, cex.lab = 2,
+         col.axis = colour, cex.axis = 1,
+         col.lab = colour, cex.lab = 1,
          bty = "n")
     points(S[[i]][length(S[[i]])], I[[i]][length(I[[i]])],
-          pch = 19, cex = 3, 
+          pch = 19, cex = 2, 
           col = ifelse((I[[i]][length(I[[i]])] < max(I[[i]])), "red", colour))
   } else if (i<length(S)) {
     lines(S[[i]], I[[i]], 
           col = ifelse((I[[i]][length(I[[i]])] < max(I[[i]])), "red", colour),
           lwd = 3)
     points(S[[i]][length(S[[i]])], I[[i]][length(I[[i]])],
-           pch = 19, cex = 3, 
+           pch = 19, cex = 2, 
            col = ifelse((I[[i]][length(I[[i]])] < max(I[[i]])), "red", colour))
   } else {
     lines(S[[i]], I[[i]])
