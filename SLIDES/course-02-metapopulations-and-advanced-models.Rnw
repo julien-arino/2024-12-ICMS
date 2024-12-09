@@ -3801,6 +3801,16 @@ The following conditions must hold
 \end{itemize}
 \end{frame}
 
+<<convert-Rnw-to-R,warning=FALSE,message=FALSE>>=
+# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error
+rmd_chunks_to_r_temp <- function(file){
+  callr::r(function(file, temp){
+    out_file = sprintf("../CODE/%s", gsub(".Rnw", ".R", file))
+    knitr::purl(file, output = out_file, documentation = 1)
+  }, args = list(file))
+}
+rmd_chunks_to_r_temp("course-02-metapopulations-and-advanced-models.Rnw")
+@
 
 
 \end{document}

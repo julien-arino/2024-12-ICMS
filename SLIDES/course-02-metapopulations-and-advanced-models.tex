@@ -2144,12 +2144,11 @@ Exploit vector structure
 \begin{alltt}
 \hldef{pop} \hlkwb{=} \hlkwd{c}\hldef{(}\hlnum{34.017}\hldef{,} \hlnum{1348.932}\hldef{,} \hlnum{1224.614}\hldef{,} \hlnum{173.593}\hldef{,} \hlnum{93.261}\hldef{)} \hlopt{*} \hlnum{1e+06}
 \hldef{countries} \hlkwb{=} \hlkwd{c}\hldef{(}\hlsng{"Canada"}\hldef{,} \hlsng{"China"}\hldef{,} \hlsng{"India"}\hldef{,} \hlsng{"Pakistan"}\hldef{,} \hlsng{"Philippines"}\hldef{)}
-\hldef{T} \hlkwb{=} \hlkwd{matrix}\hldef{(}\hlkwc{data} \hldef{=}
-             \hlkwd{c}\hldef{(}\hlnum{0}\hldef{,} \hlnum{1268}\hldef{,} \hlnum{900}\hldef{,} \hlnum{489}\hldef{,} \hlnum{200}\hldef{,}
-               \hlnum{1274}\hldef{,} \hlnum{0}\hldef{,} \hlnum{678}\hldef{,} \hlnum{859}\hldef{,} \hlnum{150}\hldef{,}
-               \hlnum{985}\hldef{,} \hlnum{703}\hldef{,} \hlnum{0}\hldef{,} \hlnum{148}\hldef{,} \hlnum{58}\hldef{,}
-               \hlnum{515}\hldef{,} \hlnum{893}\hldef{,} \hlnum{144}\hldef{,} \hlnum{0}\hldef{,} \hlnum{9}\hldef{,}
-               \hlnum{209}\hldef{,} \hlnum{174}\hldef{,} \hlnum{90}\hldef{,} \hlnum{2}\hldef{,} \hlnum{0}\hldef{),}
+\hldef{T} \hlkwb{=} \hlkwd{matrix}\hldef{(}\hlkwc{data} \hldef{=} \hlkwd{c}\hldef{(}\hlnum{0}\hldef{,} \hlnum{1268}\hldef{,} \hlnum{900}\hldef{,} \hlnum{489}\hldef{,} \hlnum{200}\hldef{,}
+                    \hlnum{1274}\hldef{,} \hlnum{0}\hldef{,} \hlnum{678}\hldef{,} \hlnum{859}\hldef{,} \hlnum{150}\hldef{,}
+                    \hlnum{985}\hldef{,} \hlnum{703}\hldef{,} \hlnum{0}\hldef{,} \hlnum{148}\hldef{,} \hlnum{58}\hldef{,}
+                    \hlnum{515}\hldef{,} \hlnum{893}\hldef{,} \hlnum{144}\hldef{,} \hlnum{0}\hldef{,} \hlnum{9}\hldef{,}
+                    \hlnum{209}\hldef{,} \hlnum{174}\hldef{,} \hlnum{90}\hldef{,} \hlnum{2}\hldef{,} \hlnum{0}\hldef{),}
            \hlkwc{nrow} \hldef{=} \hlnum{5}\hldef{,} \hlkwc{ncol} \hldef{=} \hlnum{5}\hldef{,} \hlkwc{byrow} \hldef{=} \hlnum{TRUE}\hldef{)}
 \end{alltt}
 \end{kframe}
@@ -2173,6 +2172,8 @@ Use the approximation explained in Arino \& Portet (JMB 2015)
 \end{alltt}
 \end{kframe}
 \end{knitrout}
+\vfill
+For simplicity, let's assume all movement rates are equal
 \end{frame}
 
 \begin{frame}[fragile]
@@ -2180,11 +2181,8 @@ Use the approximation explained in Arino \& Portet (JMB 2015)
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hldef{p}\hlopt{$}\hldef{P} \hlkwb{=} \hlkwd{dim}\hldef{(p}\hlopt{$}\hldef{M)[}\hlnum{1}\hldef{]}
-\hldef{p}\hlopt{$}\hldef{eta} \hlkwb{=} \hlkwd{rep}\hldef{(}\hlnum{0.3}\hldef{, p}\hlopt{$}\hldef{P)}
 \hldef{p}\hlopt{$}\hldef{epsilon} \hlkwb{=} \hlkwd{rep}\hldef{((}\hlnum{1}\hlopt{/}\hlnum{1.5}\hldef{), p}\hlopt{$}\hldef{P)}
-\hldef{p}\hlopt{$}\hldef{pi} \hlkwb{=} \hlkwd{rep}\hldef{(}\hlnum{0.7}\hldef{, p}\hlopt{$}\hldef{P)}
-\hldef{p}\hlopt{$}\hldef{gammaI} \hlkwb{=} \hlkwd{rep}\hldef{((}\hlnum{1}\hlopt{/}\hlnum{5}\hldef{), p}\hlopt{$}\hldef{P)}
-\hldef{p}\hlopt{$}\hldef{gammaA} \hlkwb{=} \hlkwd{rep}\hldef{((}\hlnum{1}\hlopt{/}\hlnum{3}\hldef{), p}\hlopt{$}\hldef{P)}
+\hldef{p}\hlopt{$}\hldef{gamma} \hlkwb{=} \hlkwd{rep}\hldef{((}\hlnum{1}\hlopt{/}\hlnum{5}\hldef{), p}\hlopt{$}\hldef{P)}
 \hlcom{# The desired values for R_0}
 \hldef{R_0} \hlkwb{=} \hlkwd{rep}\hldef{(}\hlnum{1.5}\hldef{, p}\hlopt{$}\hldef{P)}
 \end{alltt}
@@ -2200,8 +2198,7 @@ Use the approximation explained in Arino \& Portet (JMB 2015)
 \hldef{p}\hlopt{$}\hldef{idx_S} \hlkwb{=} \hlnum{1}\hlopt{:}\hldef{p}\hlopt{$}\hldef{P}
 \hldef{p}\hlopt{$}\hldef{idx_L} \hlkwb{=} \hldef{(p}\hlopt{$}\hldef{P}\hlopt{+}\hlnum{1}\hldef{)}\hlopt{:}\hldef{(}\hlnum{2}\hlopt{*}\hldef{p}\hlopt{$}\hldef{P)}
 \hldef{p}\hlopt{$}\hldef{idx_I} \hlkwb{=} \hldef{(}\hlnum{2}\hlopt{*}\hldef{p}\hlopt{$}\hldef{P}\hlopt{+}\hlnum{1}\hldef{)}\hlopt{:}\hldef{(}\hlnum{3}\hlopt{*}\hldef{p}\hlopt{$}\hldef{P)}
-\hldef{p}\hlopt{$}\hldef{idx_A} \hlkwb{=} \hldef{(}\hlnum{3}\hlopt{*}\hldef{p}\hlopt{$}\hldef{P}\hlopt{+}\hlnum{1}\hldef{)}\hlopt{:}\hldef{(}\hlnum{4}\hlopt{*}\hldef{p}\hlopt{$}\hldef{P)}
-\hldef{p}\hlopt{$}\hldef{idx_R} \hlkwb{=} \hldef{(}\hlnum{4}\hlopt{*}\hldef{p}\hlopt{$}\hldef{P}\hlopt{+}\hlnum{1}\hldef{)}\hlopt{:}\hldef{(}\hlnum{5}\hlopt{*}\hldef{p}\hlopt{$}\hldef{P)}
+\hldef{p}\hlopt{$}\hldef{idx_R} \hlkwb{=} \hldef{(}\hlnum{3}\hlopt{*}\hldef{p}\hlopt{$}\hldef{P}\hlopt{+}\hlnum{1}\hldef{)}\hlopt{:}\hldef{(}\hlnum{4}\hlopt{*}\hldef{p}\hlopt{$}\hldef{P)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -2215,12 +2212,11 @@ Use the approximation explained in Arino \& Portet (JMB 2015)
 \hlcom{# infectious individuals in Canada.}
 \hldef{L0} \hlkwb{=} \hlkwd{mat.or.vec}\hldef{(p}\hlopt{$}\hldef{P,} \hlnum{1}\hldef{)}
 \hldef{I0} \hlkwb{=} \hlkwd{mat.or.vec}\hldef{(p}\hlopt{$}\hldef{P,} \hlnum{1}\hldef{)}
-\hldef{A0} \hlkwb{=} \hlkwd{mat.or.vec}\hldef{(p}\hlopt{$}\hldef{P,} \hlnum{1}\hldef{)}
 \hldef{R0} \hlkwb{=} \hlkwd{mat.or.vec}\hldef{(p}\hlopt{$}\hldef{P,} \hlnum{1}\hldef{)}
 \hldef{I0[}\hlnum{1}\hldef{]} \hlkwb{=} \hlnum{2}
-\hldef{S0} \hlkwb{=} \hldef{pop} \hlopt{-} \hldef{(L0} \hlopt{+} \hldef{I0} \hlopt{+} \hldef{A0} \hlopt{+} \hldef{R0)}
+\hldef{S0} \hlkwb{=} \hldef{pop} \hlopt{-} \hldef{(L0} \hlopt{+} \hldef{I0} \hlopt{+} \hldef{R0)}
 \hlcom{# Vector of initial conditions to be passed to ODE solver.}
-\hldef{IC} \hlkwb{=} \hlkwd{c}\hldef{(}\hlkwc{S} \hldef{= S0,} \hlkwc{L} \hldef{= L0,} \hlkwc{I} \hldef{= I0,} \hlkwc{A} \hldef{= A0,} \hlkwc{R} \hldef{= R0)}
+\hldef{IC} \hlkwb{=} \hlkwd{c}\hldef{(}\hlkwc{S} \hldef{= S0,} \hlkwc{L} \hldef{= L0,} \hlkwc{I} \hldef{= I0,} \hlkwc{R} \hldef{= R0)}
 \hlcom{# Time span of the simulation (5 years here)}
 \hldef{tspan} \hlkwb{=} \hlkwd{seq}\hldef{(}\hlkwc{from} \hldef{=} \hlnum{0}\hldef{,} \hlkwc{to} \hldef{=} \hlnum{5} \hlopt{*} \hlnum{365.25}\hldef{,} \hlkwc{by} \hldef{=} \hlnum{0.1}\hldef{)}
 \end{alltt}
@@ -2265,11 +2261,11 @@ Use the approximation explained in Arino \& Portet (JMB 2015)
                 \hldef{R} \hlkwb{=} \hldef{x[idx_R]}
                 \hldef{N} \hlkwb{=} \hldef{S} \hlopt{+} \hldef{L} \hlopt{+} \hldef{I} \hlopt{+} \hldef{A} \hlopt{+} \hldef{R}
                 \hldef{Phi} \hlkwb{=} \hldef{beta} \hlopt{*} \hldef{S} \hlopt{*} \hldef{(I} \hlopt{+} \hldef{eta} \hlopt{*} \hldef{A)} \hlopt{/} \hldef{N}
-                \hldef{dS} \hlkwb{=} \hlopt{-} \hldef{Phi} \hlopt{+} \hldef{MS} \hlopt{%*%} \hldef{S}
-                \hldef{dL} \hlkwb{=} \hldef{Phi} \hlopt{-} \hldef{epsilon} \hlopt{*} \hldef{L} \hlopt{+} \hldef{p}\hlopt{$}\hldef{ML} \hlopt{%*%} \hldef{L}
-                \hldef{dI} \hlkwb{=} \hldef{(}\hlnum{1} \hlopt{-} \hldef{pi)} \hlopt{*} \hldef{epsilon} \hlopt{*} \hldef{L} \hlopt{-} \hldef{gammaI} \hlopt{*} \hldef{I} \hlopt{+} \hldef{MI} \hlopt{%*%} \hldef{I}
-                \hldef{dA} \hlkwb{=} \hldef{pi} \hlopt{*} \hldef{epsilon} \hlopt{*} \hldef{L} \hlopt{-} \hldef{gammaA} \hlopt{*} \hldef{A} \hlopt{+} \hldef{MA} \hlopt{%*%} \hldef{A}
-                \hldef{dR} \hlkwb{=} \hldef{gammaI} \hlopt{*} \hldef{I} \hlopt{+} \hldef{gammaA} \hlopt{*} \hldef{A} \hlopt{+} \hldef{MR} \hlopt{%*%} \hldef{R}
+                \hldef{dS} \hlkwb{=} \hlopt{-} \hldef{Phi} \hlopt{+} \hldef{M} \hlopt{%*%} \hldef{S}
+                \hldef{dL} \hlkwb{=} \hldef{Phi} \hlopt{-} \hldef{epsilon} \hlopt{*} \hldef{L} \hlopt{+} \hldef{p}\hlopt{$}\hldef{M} \hlopt{%*%} \hldef{L}
+                \hldef{dI} \hlkwb{=} \hldef{(}\hlnum{1} \hlopt{-} \hldef{pi)} \hlopt{*} \hldef{epsilon} \hlopt{*} \hldef{L} \hlopt{-} \hldef{gammaI} \hlopt{*} \hldef{I} \hlopt{+} \hldef{M} \hlopt{%*%} \hldef{I}
+                \hldef{dA} \hlkwb{=} \hldef{pi} \hlopt{*} \hldef{epsilon} \hlopt{*} \hldef{L} \hlopt{-} \hldef{gammaA} \hlopt{*} \hldef{A} \hlopt{+} \hldef{M} \hlopt{%*%} \hldef{A}
+                \hldef{dR} \hlkwb{=} \hldef{gammaI} \hlopt{*} \hldef{I} \hlopt{+} \hldef{gammaA} \hlopt{*} \hldef{A} \hlopt{+} \hldef{M} \hlopt{%*%} \hldef{R}
                 \hldef{dx} \hlkwb{=} \hlkwd{list}\hldef{(}\hlkwd{c}\hldef{(dS, dL, dI, dA, dR))}
                 \hlkwd{return}\hldef{(dx)}
         \hldef{\})}
@@ -2293,7 +2289,7 @@ Use the approximation explained in Arino \& Portet (JMB 2015)
 \end{alltt}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(substitute(expr), data, enclos = parent.frame()): object 'MS' not found}}\end{kframe}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(substitute(expr), data, enclos = parent.frame()): object 'idx\_A' not found}}\end{kframe}
 \end{knitrout}
 \end{frame}
 	
@@ -3842,6 +3838,23 @@ The following conditions must hold
 \end{itemize}
 \end{frame}
 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# From https://stackoverflow.com/questions/36868287/purl-within-knit-duplicate-label-error}
+\hldef{rmd_chunks_to_r_temp} \hlkwb{<-} \hlkwa{function}\hldef{(}\hlkwc{file}\hldef{)\{}
+  \hldef{callr}\hlopt{::}\hlkwd{r}\hldef{(}\hlkwa{function}\hldef{(}\hlkwc{file}\hldef{,} \hlkwc{temp}\hldef{)\{}
+    \hldef{out_file} \hlkwb{=} \hlkwd{sprintf}\hldef{(}\hlsng{"../CODE/%s"}\hldef{,} \hlkwd{gsub}\hldef{(}\hlsng{".Rnw"}\hldef{,} \hlsng{".R"}\hldef{, file))}
+    \hldef{knitr}\hlopt{::}\hlkwd{purl}\hldef{(file,} \hlkwc{output} \hldef{= out_file,} \hlkwc{documentation} \hldef{=} \hlnum{1}\hldef{)}
+  \hldef{\},} \hlkwc{args} \hldef{=} \hlkwd{list}\hldef{(file))}
+\hldef{\}}
+\hlkwd{rmd_chunks_to_r_temp}\hldef{(}\hlsng{"course-02-metapopulations-and-advanced-models.Rnw"}\hldef{)}
+\end{alltt}
+\begin{verbatim}
+## [1] "../CODE/course-02-metapopulations-and-advanced-models.R"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 
 \end{document}
