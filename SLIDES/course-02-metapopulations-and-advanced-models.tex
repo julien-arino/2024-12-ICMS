@@ -2281,14 +2281,20 @@ Use the approximation explained in Arino \& Portet (JMB 2015)
 	
 
 \begin{frame}[fragile]{And now call the solver}
-\begin{lstlisting}
-# Call the ODE solver
-sol <- ode(y = IC, 
-			times = tspan, 
-			func = SLIAR_metapop_rhs, 
-			parms = p,
-			method = "ode45")
-\end{lstlisting}	
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Call the ODE solver}
+\hldef{sol} \hlkwb{<-} \hlkwd{ode}\hldef{(}\hlkwc{y} \hldef{= IC,}
+                        \hlkwc{times} \hldef{= tspan,}
+                        \hlkwc{func} \hldef{= SLIAR_metapop_rhs,}
+                        \hlkwc{parms} \hldef{= p,}
+                        \hlkwc{method} \hldef{=} \hlsng{"ode45"}\hldef{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(substitute(expr), data, enclos = parent.frame()): object 'MS' not found}}\end{kframe}
+\end{knitrout}
 \end{frame}
 	
 \begin{frame}[fragile]{One little trick (case with demography)}

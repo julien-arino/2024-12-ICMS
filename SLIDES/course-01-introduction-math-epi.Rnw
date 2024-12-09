@@ -77,6 +77,8 @@ cat(input_setup)
 \subsection{Brief remarks about terminology}
 \newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_9agynl9agynl9agy.jpeg}
 
+\maxFrameImage{FIGS/Milwid_etal-front-page}
+
 \begin{frame}{Incidence \& Prevalence (when?)}
 \defword{Incidence}: number of new cases in a population generated within a certain time period
 \vfill
@@ -90,31 +92,31 @@ $\implies$ $I(t)$ in an epidemiological model is \textbf{prevalence}, not \textb
 \vfill
 - "Real" epidemiologist: let's trace people who were exposed to the virus, i.e., people having come into contact with the virus (whether they have contracted the disease or not)
 \vfill
-- Interestingly, I have embarked on a quixotic quest to make people use $L$ instead of $E$, only to be told by real epidemiologists that they don't care \code{:)}
+- Interestingly, I am embarked on a quixotic quest to make people use $L$ instead of $E$, only to be told by real epidemiologists that they don't care \code{:)} (see this paper, though: \href{https://doi.org/10.1016/j.idm.2024.03.003}{Origins of the problematic E in SEIR epidemic models}, D. Burke, IDM 2024)
 \end{frame}
 
+
+
+
+\begin{frame}{Some terminology for ``where''}
+\bbullet \defword{Epidemic}: diseases that are \emph{visited upon} a population
+\vfill
+\bbullet \defword{Pandemic}: epidemic that has spread across a large region, e.g., multiple continents or worldwide
+\vfill
+\bbullet \defword{Endemic}: disease that \emph{resides within} a population
+\vfill
+\bbullet We don't say ``panendemic''
+\end{frame}
 
 \begin{frame}{The different stages of propagation}
         \includegraphics[width=\textwidth]{FIGS/Difference_between_outbreak,_endemic,_epidemic_and_pandemic-en.png}
 \end{frame}
         
 
-
-\begin{frame}{Some terminology for ``where''}
-\bbullet \defword{Epidemic}: diseases that are \emph{visited upon} a population
-\vfill
-\bbullet \defword{Pandemic}: (will revisit this later in the course) epidemic that has spread across a large region, e.g., multiple continents or worldwide
-\vfill
-\bbullet \defword{Endemic}: diseases that \emph{reside within} a population
-\vfill
-\bbullet We don't say ``panendemic''
-\end{frame}
-
-
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \subsection{Mathematical epidemiology -- The early years}
-\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_9agynl9agynl9agy.jpeg}
 
 \begin{frame}{Daniel Bernoulli (1760)}
 \begin{minipage}{0.47\textwidth}
@@ -193,7 +195,7 @@ That paper was followed by a series of ``Contributions to the mathematical theor
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \subsection{Computational epidemiology}
-\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_9agynl9agynl9agy.jpeg}
 
 
 \begin{frame}{A more recent trend}
@@ -226,7 +228,7 @@ That paper was followed by a series of ``Contributions to the mathematical theor
 %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
 \subsection{Use of data in mathematical epidemiology}
-\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_9agynl9agynl9agy.jpeg}
 
 
 \begin{frame}{Has happened all along, undergoing a transformation}
@@ -256,7 +258,7 @@ That paper was followed by a series of ``Contributions to the mathematical theor
 \vfill
 \bbullet Many epidemiological models are compartmental models, but the development of compartmental models in the 1970-1980s was not at all specific to epidemiology
 \vfill
-\bbullet See in particular the works of \href{https://www.semanticscholar.org/author/J.-Jacquez/2321059}{John Jacquez}, \href{https://scholar.google.ca/citations?user=dv_z_mAAAAAJ}{Carl Simon}, GG Walter
+\bbullet See in particular the works of \href{https://www.semanticscholar.org/author/J.-Jacquez/2321059}{John Jacquez}, \href{https://scholar.google.ca/citations?user=dv_z_mAAAAAJ}{Carl Simon}, \href{https://www.semanticscholar.org/author/G.-Walter/1799059}{GG Walter}
 \vfill
 \bbullet Unjustly fell into disuse: there are some very nice results in the area    
 \end{frame}
@@ -1002,21 +1004,7 @@ final_size = function(L) {
 \end{frame}
 
 \begin{frame}[fragile]{A figure with all the information}
-\begin{lstlisting}
-S = seq(0.1, S0, by = 0.1)
-fs = final_size_eq(S, S0 = S0, I0 = I0, R_0 = R_0)
-S_inf = uniroot(f = function(x) final_size_eq(S_inf = x, 
-                                              S0 = S0, I0 = I0, 
-                                              R_0 = R_0),
-                interval = c(0.05, S0))
-plot(S, fs, type = "l", ylab = "Value of equation (10)")
-abline(h = 0)
-points(x = S_inf$root, y = 0, pch = 19)
-text(x = S_inf$root, y = 0, labels = "S_inf", adj = c(-0.25,-1))
-\end{lstlisting}
-\end{frame}
-
-<<KMK_final_size_0p8,echo=FALSE>>=
+<<KMK_final_size_0p8>>=
 N0 = 1000
 I0 = 1
 S0 = N0-I0
@@ -1032,6 +1020,8 @@ abline(h = 0)
 points(x = S_inf$root, y = 0, pch = 19)
 text(x = S_inf$root, y = 0, labels = "S_inf", adj = c(-0.25,-1))
 @
+\end{frame}
+
 
 
 \begin{frame}{$\R_0=0.8$}
@@ -1721,7 +1711,7 @@ Problem: we have antivirals to use against influenza, either prophylactically or
 \maxFrameImage{FIGS/ArinoPortet-2020.png}
 
 \begin{frame}
-Extends the SLIAR model to take into account non-exponentially distributed stage durations (see lecture on Stochastic epidemiological models)
+Extends the SLIAR model to take into account non-exponentially distributed stage durations (see course 02)
 \end{frame}
 
 \begin{frame}{The original model (well, almost the first one)}

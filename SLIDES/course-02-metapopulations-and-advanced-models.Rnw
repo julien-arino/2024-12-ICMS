@@ -2139,12 +2139,11 @@ Exploit vector structure
 <<>>=
 pop = c(34.017, 1348.932, 1224.614, 173.593, 93.261) * 1e+06
 countries = c("Canada", "China", "India", "Pakistan", "Philippines")
-T = matrix(data = 
-             c(0, 1268, 900, 489, 200, 
-               1274, 0, 678, 859, 150, 
-               985, 703, 0, 148, 58, 
-               515, 893, 144, 0, 9, 
-               209, 174, 90, 2, 0), 
+T = matrix(data = c(0, 1268, 900, 489, 200, 
+                    1274, 0, 678, 859, 150, 
+                    985, 703, 0, 148, 58, 
+                    515, 893, 144, 0, 9, 
+                    209, 174, 90, 2, 0), 
            nrow = 5, ncol = 5, byrow = TRUE)	
 @
 \end{frame}
@@ -2162,16 +2161,15 @@ for (from in 1:5) {
 }
 p$M = p$M - diag(colSums(p$M))
 @
+\vfill
+For simplicity, let's assume all movement rates are equal
 \end{frame}
 
 \begin{frame}[fragile]
 <<>>=
 p$P = dim(p$M)[1]
-p$eta = rep(0.3, p$P)
 p$epsilon = rep((1/1.5), p$P)
-p$pi = rep(0.7, p$P)
-p$gammaI = rep((1/5), p$P)
-p$gammaA = rep((1/3), p$P)
+p$gamma = rep((1/5), p$P)
 # The desired values for R_0
 R_0 = rep(1.5, p$P)
 @	
@@ -2183,8 +2181,7 @@ R_0 = rep(1.5, p$P)
 p$idx_S = 1:p$P
 p$idx_L = (p$P+1):(2*p$P)
 p$idx_I = (2*p$P+1):(3*p$P)
-p$idx_A = (3*p$P+1):(4*p$P)
-p$idx_R = (4*p$P+1):(5*p$P)
+p$idx_R = (3*p$P+1):(4*p$P)
 @	
 \end{frame}
 
@@ -2194,12 +2191,11 @@ p$idx_R = (4*p$P+1):(5*p$P)
 # infectious individuals in Canada.
 L0 = mat.or.vec(p$P, 1)
 I0 = mat.or.vec(p$P, 1)
-A0 = mat.or.vec(p$P, 1)
 R0 = mat.or.vec(p$P, 1)
 I0[1] = 2
-S0 = pop - (L0 + I0 + A0 + R0)
+S0 = pop - (L0 + I0 + R0)
 # Vector of initial conditions to be passed to ODE solver.
-IC = c(S = S0, L = L0, I = I0, A = A0, R = R0)
+IC = c(S = S0, L = L0, I = I0, R = R0)
 # Time span of the simulation (5 years here)
 tspan = seq(from = 0, to = 5 * 365.25, by = 0.1)
 @
@@ -2236,11 +2232,11 @@ SLIAR_metapop_rhs <- function(t, x, p) {
 		R = x[idx_R]
 		N = S + L + I + A + R
 		Phi = beta * S * (I + eta * A) / N
-		dS = - Phi + MS %*% S
-		dL = Phi - epsilon * L + p$ML %*% L
-		dI = (1 - pi) * epsilon * L - gammaI * I + MI %*% I
-		dA = pi * epsilon * L - gammaA * A + MA %*% A
-		dR = gammaI * I + gammaA * A + MR %*% R
+		dS = - Phi + M %*% S
+		dL = Phi - epsilon * L + p$M %*% L
+		dI = (1 - pi) * epsilon * L - gammaI * I + M %*% I
+		dA = pi * epsilon * L - gammaA * A + M %*% A
+		dR = gammaI * I + gammaA * A + M %*% R
 		dx = list(c(dS, dL, dI, dA, dR))
 		return(dx)
 	})
@@ -2250,14 +2246,14 @@ SLIAR_metapop_rhs <- function(t, x, p) {
 	
 
 \begin{frame}[fragile]{And now call the solver}
-\begin{lstlisting}
+<<>>=
 # Call the ODE solver
 sol <- ode(y = IC, 
 			times = tspan, 
 			func = SLIAR_metapop_rhs, 
 			parms = p,
 			method = "ode45")
-\end{lstlisting}	
+@
 \end{frame}
 	
 \begin{frame}[fragile]{One little trick (case with demography)}

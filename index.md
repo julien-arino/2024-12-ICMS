@@ -12,8 +12,8 @@ Feel free to use the material in these slides or in the folders. If you find thi
 
 ### Slides
 
-- [Course 01](course-01-introduction-math-epi.pdf): Introduction to mathematical epidemiology.
-- [Course 02](course-02-metapopulations-and-advanced-models.pdf): Metaapopulation models and a few advanced models. 
+- [Course 01](https://julien-arino.github.io/3MC-2024-12-ICMS/SLIDES/course-01-introduction-math-epi.pdf): Introduction to mathematical epidemiology.
+- [Course 02](https://julien-arino.github.io/3MC-2024-12-ICMS/SLIDES/course-02-metapopulations-and-advanced-models.pdf): Metaapopulation models and a few advanced models. 
 
 
 ### Additional slides and videos
