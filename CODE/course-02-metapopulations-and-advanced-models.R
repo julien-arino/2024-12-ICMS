@@ -60,6 +60,13 @@ T = matrix(data = c(0, 1268, 900, 489, 200,
 
 
 ## -----------------------------------------------------------------------------
+pop = c(34.017, 1348.932, 1224.614, 173.593, 93.261) * 1e+06
+countries = c("Canada", "China", "India", "Pakistan", "Philippines")
+death_rates = 1/(365.25*c(81.30, 78.59, 67.74, 66.43, 72.19))
+birth_rates = pop*death_rates
+
+
+## -----------------------------------------------------------------------------
 p = list()
 p$M = mat.or.vec(nr = dim(T)[1], nc = dim(T)[2])
 for (from in 1:5) {
@@ -75,6 +82,9 @@ p$M = p$M - diag(colSums(p$M))
 p$P = dim(p$M)[1]
 p$epsilon = rep((1/1.5), p$P)
 p$gamma = rep((1/5), p$P)
+p$nu = rep((1/365.25), p$P)
+p$b = birth_rates
+p$d = death_rates
 # The desired values for R_0
 R_0 = rep(1.5, p$P)
 
@@ -103,9 +113,8 @@ tspan = seq(from = 0, to = 5 * 365.25, by = 0.1)
 ## -----------------------------------------------------------------------------
 for (i in 1:p$P) {
   p$beta[i] = 
-    R_0[i] / S0[i] * 1 / 
-    ((1 - p$pi[i])/p$gammaI[i] + 
-       p$pi[i] * p$eta[i]/p$gammaA[i])
+    R_0[i] *(p$gamma[i]+p$d[i]) * (p$epsilon[i]+p$d[i]) * p$d[i] / 
+    (p$espilon[i]*p$d[i])
 }
 
 
@@ -115,17 +124,13 @@ SLIAR_metapop_rhs <- function(t, x, p) {
 		S = x[idx_S]
 		L = x[idx_L]
 		I = x[idx_I]
-		A = x[idx_A]
 		R = x[idx_R]
-		N = S + L + I + A + R
-		Phi = beta * S * (I + eta * A) / N
-		dS = - Phi + M %*% S
-		dL = Phi - epsilon * L + p$M %*% L
-		dI = (1 - pi) * epsilon * L - gammaI * I + M %*% I
-		dA = pi * epsilon * L - gammaA * A + M %*% A
-		dR = gammaI * I + gammaA * A + M %*% R
-		dx = list(c(dS, dL, dI, dA, dR))
-		return(dx)
+		Phi = beta*S*I
+		dS = b - d*S - Phi + M%*%S
+		dL = Phi - (epsilon+d)*L + M%*%L
+		dI = epsilon*L - (gamma+d)*I + M%*%I
+		dR = gamma*I + - (nu+d)*R + M%*%R
+		return(list(c(dS, dL, dI, dR)))
 	})
 }	
 
@@ -134,7 +139,7 @@ SLIAR_metapop_rhs <- function(t, x, p) {
 # Call the ODE solver
 sol <- ode(y = IC, 
 			times = tspan, 
-			func = SLIAR_metapop_rhs, 
+			func = SLIRS_metapop_rhs, 
 			parms = p,
 			method = "ode45")
 

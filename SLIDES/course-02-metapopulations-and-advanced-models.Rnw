@@ -66,7 +66,7 @@ cat(input_setup)
 \titlepagewithfigure{FIGS-slides-admin/Gemini_Generated_Image_4oxcef4oxcef4oxc.jpeg}
 \outlinepage{FIGS-slides-admin/Gemini_Generated_Image_tzvf9ztzvf9ztzvf.jpeg}
 
-
+\maxFrameImage{FIGS/Winnipeg-2024-12-11_08.04.44}
 %%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%
@@ -252,385 +252,11 @@ Matrix $A\in\IF^{n\times n}$ is irreducible if for all $i,j=1,\ldots,n$, there e
 
 %%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%
-\subsection{Generic model}
-\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
-
-\frame{
-Dynamics of the system:
-\begin{itemize}
-\item dynamics in each location resulting from the interactions of the various compartments, 
-\item operator describing the movements of individuals between the locations.
-\end{itemize}
-}
-
-\begin{frame}{A very simple example to facilitate ingestion}
-	Suppose an SIS model over a set $\P$ of locations. If need be, choose an order on elements of $\P$ and index locations as $1,\ldots,|\P|$
-	\vfill
-	Let $S_p$ and $I_p$ be number of susceptible and infectious individuals in location $p\in\P$, respectively
-	\vfill 
-	Then, in location $p\in\P$, dynamics governed by
-	\begin{subequations}
-		\label{sys:sample_SIS}
-		\begin{align}
-			S_p' &= b_p - \beta_pS_pI_p +\gamma_pI_p -d_pS_p +\sum_{q\in\P}m_{Spq}S_q\\
-			I_p' &= \beta_pS_pI_p -\gamma_pI_p -d_pI_p+\sum_{q\in\P}m_{Ipq}I_q
-		\end{align}
-	\end{subequations}
-	\vfill
-	(Don't worry about why this is a metapopulation model this far)
-\end{frame}
-
-\frame{\frametitle{Notation}
-\begin{itemize}
-	\item $N_{cp}(t)$ number of individuals of compartment $c$ in location $p$ at time $t$
-	\vfill
-	(Here and elsewhere: omit dependence on $t$ unless it causes confusion)
-	\vfill
-	\item $N_c=\left(N_{c1},\ldots,N_{c|\P|}\right)^T$ distribution of individuals of compartment $c\in\C$ among the different locations 
-	\newline
-	[E.g., for \eqref{sys:sample_SIS}, $N_S=(S_1,\ldots,S_{|\P|})^T$]
-	\vfill
-	\item $N^p=\left(N_1^p,\ldots,N_{|\P|}^p\right)^T$ composition of the population in location $p\in\P$
-	\newline
-	[E.g., for \eqref{sys:sample_SIS}, $N^p=(S_p,I_p)^T$]
-\end{itemize}
-}
-
-\frame{\frametitle{General form of the system}
-Interaction function $f$ and movement operator $M$ can be time-dependent (not shown)
-\begin{itemize}
-\item Equation by equation; for all $c\in\C$ and $p\in\P$
-\begin{equation}\label{sys:metapop_Nsp}
-\frac{d}{dt}N_{cp}=f_{cp}(N^p)+M_{cp}(N_s)
-\end{equation}
-with $f_{cp}:\mathbb{R}^{|\P|}\to\mathbb{R}$ and $M_{cp}:\mathbb{R}^{|\C|}\to\mathbb{R}$
-\item Compartment by compartment; for all $c\in\C$
-\begin{equation}\label{sys:metapop_Ns}
-\frac{d}{dt}N_c =f^p(N^p)+M_c(N_c)
-\end{equation}
-with $f^p:\mathbb{R}^{|\P|}\to\mathbb{R}^{|\C|}$ and $M_s^p:\mathbb{R}^{|\C|}\to\mathbb{R}^{|\C|}$
-\item Location by location; for all $p=1,\ldots,|\P|$
-\begin{equation}\label{sys:metapop_Np}
-\frac{d}{dt}N^p =f^p(N^p)+M^p(N^p)
-\end{equation}
-with $f^p:\mathbb{R}^{|\P|}\to\mathbb{R}^{|\C|}$ and $M_s^p:\mathbb{R}^{|\C|}\to\mathbb{R}^{|\C|}$
-\end{itemize}
-}
-
-
-\frame{\frametitle{Metapopulation models with linear movement}
-Use a linear autonomous movement operator
-\vfill
-Then, for a given compartment $c\in\C$ and in a given location $p\in\P$
-\[
-	N_{cp}'=f_{cp}(N^p)
-	+\sum\dind{q\in\P}{q\neq p}m_{cpq}N_{cq} 
-	-\left(\sum\dind{q\in\P}{q\neq p}m_{cqp}\right)N_{cp}
-\]
-where $m_{cpq}$ rate of movement of individuals in compartment $c\in\C$ from location $q\in\P$ to location $p\in\P$
-}
-
-\begin{frame}{A more compact notation}
-	To make 
-	\[
-		N_{cp}'=f_{cp}(N^p)
-		+\sum\dind{q\in\P}{q\neq p}m_{cpq}N_{cq} 
-		-\left(\sum\dind{q\in\P}{q\neq p}m_{cqp}\right)N_{cp}
-	\]
-	more compact, denote the rate of leaving location $p$ as
-	\begin{equation}
-		m_{cpp} = -\sum\dind{q\in\P}{q\neq p}m_{cqp}
-	\end{equation}
-	Then
-	\begin{equation}\label{eq:general_metapop_linear_migration}
-		N_s'=f_{cp}(N^p)+\sum_{q\in\P}m_{cpq}N_{cq}
-	\end{equation}
-\end{frame}
-
-\begin{frame}{Vector form of the system}
-For compartment $c\in\C$,
-\begin{equation}\label{eq:general_metapop}
-N_c'=f(N)+\mathcal{M}_cN_c
-\end{equation}
-with
-\begin{equation}\label{eq:movement_matrix}
-\mathcal{M}_c =
-\begin{pmatrix}
--\sum\limits_{k\in\P}m_{ck1} & m_{c12} & \cdots & m_{c1|\P|} \\
-& & & \\
-m_{c|\P|1} & m_{c|\P|2} & \cdots & -\sum\limits_{k\in\P}m_{ck|\P|}
-\end{pmatrix}
-\end{equation}
-\end{frame}
-
-
-%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%
-\subsection{The movement matrix}
-\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
-
-\begin{frame}{Definitions and notation for matrices}
-\begin{itemize}
-	\item $M\in\mathbb{R}^{n\times n}$ a square matrix with entries denoted $m_{ij}$
-	\vfill
-	\item $M\geq\mathbf{0}$ if $m_{ij}\geq 0$ for all $i,j$ (could be the zero matrix); $M>\mathbf{0}$ if $M\geq\mathbf{0}$ and $\exists i,j$ with $m_{ij}>0$; $M\gg\mathbf{0}$ if $m_{ij}>0$ $\forall i,j=1,\ldots,n$. Same notation for vectors
-	\vfill
-	\item $\sigma(M)=\{\lambda\in\mathbf{C}; M\lambda=\lambda\mathbf{v}, \mathbf{v}\neq\mathbf{0}\}$ \textbf{spectrum} of $M$
-	\vfill
-	\item $\rho(M)=\max_{\lambda\in\sigma(M)}\{|\lambda|\}$ \textbf{spectral radius}
-	\vfill
-	\item $s(M)=\max_{\lambda\in\sigma(M)}\{\Re(\lambda)\}$ \textbf{spectral abscissa} (or \textbf{stability modulus})
-	\vfill
-	\item $M$ is an \textbf{M-matrix} if it is a \textbf{Z-matrix} ($m_{ij}\leq 0$ for $i\neq j$) and $M = s\mathbb{I}-A$, with $A\geq 0$ and $s\geq \rho(A)$
-\end{itemize}
-\end{frame}
-
-\begin{frame}{The movement matrix}
-	The matrix
-	\begin{equation}\tag{\ref{eq:movement_matrix}}
-		\mathcal{M}_c =
-		\begin{pmatrix}
-		-\sum\limits_{k\in\P}m_{ck1} & m_{c12} & \cdots & m_{c1|\P|} \\
-		& & & \\
-		m_{c|\P|1} & m_{c|\P|2} & \cdots & -\sum\limits_{k\in\P}m_{ck|\P|}
-		\end{pmatrix}
-	\end{equation}
-	is the \textbf{movement matrix}
-	\vfill
-	It plays an extremely important role in the analysis of metapopulation systems, so we'll spend some time discussing its properties
-	\vfill
-$\mathcal{M}_c$ describes
-\begin{itemize} 
-\item existence of connections
-\item when they exist, their ``intensity''
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Properties of the movement matrix $\M$}
-	First, remark $-\M_c$ is a Lagrangian matrix (cf. Michael's course)
-	\vfill
-	\begin{lemma}\label{lemma:behaviour_Mc}
-		\begin{enumerate}
-			\item $0\in\sigma(\M)$ corresponding to left e.v. $\11^T$ \hfill[$\sigma$ spectrum]
-			\item $-\M$ is a singular M-matrix
-			\item $0=s(\M)\in\sigma(\M)$ \hfill[$s$ spectral abscissa]
-			\item If $\M$ irreducible, then $s(\M)$ has multiplicity 1
-		\end{enumerate}
-	\end{lemma}
-	\vfill
-	For complete proof of Lemma~\ref{lemma:behaviour_Mc} and Proposition~\ref{prop:behaviour_Mc} (next page), see \href{http://dx.doi.org/10.1007/s11538-019-00593-1}{Arino, Bajeux \& Kirkland, BMB 2019}
-\end{frame}
-
-\begin{frame}
-	\begin{proposition}[$D$ a diagonal matrix]
-		\label{prop:behaviour_Mc}
-		\begin{enumerate}
-			\item $s(\M+d\II)=d$, $\forall d\in\IR$
-			\item $s(\M+D)\in\sigma(\M+D)$ associated to $\bv>\b0$. If $\M$ irreducible, $s(\M+D)$ has  multiplicity 1 and is associated to $\bv\gg \b0$
-			\item If $\diag (D)\gg \b0$, then $D-\M$ invertible M-matrix and $(D-\M)^{-1}> \b0$
-			\item $\M$ irreducible and $\diag(D)>\b0$ $\Longrightarrow$ $D-\M$ nonsingular irreducible M-matrix and $(D-\M)^{-1}\gg \b0$		
-		\end{enumerate}
-	\end{proposition}
-\end{frame}
-
-
-%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%
-\subsection{Behaviour of the mobility component}
-\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
-
-
-\frame{\frametitle{Behaviour of the mobility component -- No demography}
-Assume no within-location dynamics, just movement. Then \eqref{eq:general_metapop} takes the form
-\begin{equation}\label{eq:mobility_compartment}
-	N_c' = \mathcal{M}_cN_c
-\end{equation}
-\vfill
-\begin{theorem}\label{th:GAS_metapop1}
-For a given compartment $c\in\C$, suppose that the movement matrix $\M_c$ is irreducible. Then for any $N_c(0)>0$, \eqref{eq:mobility_compartment} satisfies
-\[
-\lim_{t\to\infty}N_c(t)=N_c^\star\gg 0
-\]
-\end{theorem}
-\vfill
-Note that $N_c^\star$ depends on $\nbOne^TN_c(0)$
-}
-
-
-\begin{frame}{Reduction to total population per location -- Demography}
-Let 
-\[
-	T_p = \sum_{c\in\C}N_{cp}
-\]
-be the total population in location $p$
-\vfill
-It is often posssible to obtain, in each location $p\in\P$, an equation for the evolution of the total population that takes the form
-\begin{equation}\label{eq:dT_total_population}
-	T_p' = 
-	D_p(T_p)+\sum_{c\in\C}\sum_{q\in\P}m_{cpq}N_{cq}
-\end{equation}
-where $D_p(T_p)$ describes the demography in location $p$
-\end{frame}
-
-\begin{frame}{Nature of the demography}
-	Most common types of demographic functions
-	\begin{itemize}
-		\item $D_p(T_p)=b_p-d_pT_p$ (asymptotically constant population)
-		\item $D_p(T_p)=b_pT_p-d_pT_p$ 
-		\item $D_p(T_p)=d_pT_p-d_pT_p=0$ (constant population)
-		\item $D_p(T_p)=r_pT_p(1-T_p/K_p)$ (logistic demography)
-	\end{itemize}
-	\vfill
-	In what follows, assume 
-	\begin{equation}\label{eq:demography_function}
-		D_p(T_p)=b_p-d_pT_p
-	\end{equation}
-\end{frame}
-
-\begin{frame}{Vector / matrix form of the equation}
-Assuming demography is of the form \eqref{eq:demography_function}, write \eqref{eq:dT_total_population} in vector form
-\begin{equation}\label{sys:dN_general} 
-	\mathbf{T}'=\mathbf{b}-\bd\bT+\sum_{c\in\C}\mathcal{M}_c\bN_{c}	
-\end{equation}
-where 
-\begin{itemize}
-	\item $\mathbf{b}=(b_1,\ldots,b_{|\mathcal{P}|})^T\in\IR^{|\P|}$
-	\item $\mathbf{T}=(T_1,\ldots,T_{|\mathcal{P}|})^T\in\IR^{|\P|}$
-	\item $\mathbf{N}=(N_{c1},\ldots,N_{c{|\mathcal{P}|}})^T\in\IR^{|\P|}$
-	\item $\bd=\mathsf{diag}\left(d_1,\ldots,d_{|\mathcal{P}|}\right)\in\IR^{|\mathcal{P}|\times|\mathcal{P}|}$
-	\item $\mathcal{M}_c\in\IR^{|\mathcal{P}|\times|\mathcal{P}|}$
-\end{itemize}
-
-\end{frame}
-
-
-\begin{frame}{The nice case}
-Suppose movement rates \textbf{equal for all compartments}, i.e.,
-$$
-\M_c\equiv\M
-$$
-\vfill
-(stronger than Definition~\ref{def:mvt_similar_for_all_compartments}, which only requires zero/nonzero patterns in all $\M_c$, $c\in\C$, to be the same)
-\vfill
-Then
-\begin{align}
-\bT' &= \bb-\bd\bT+\M\sum_{c\in\C}\bN_{c} \nonumber \\
-&= \bb-\bd\bT+\M\bT \label{sys:pSLIRS_toy_dN}
-\end{align}
-\end{frame}
-
-
-\begin{frame}{Equilibria}
-$$
-\begin{aligned}
-\bT'=\b0 &\Leftrightarrow \mathbf{b}-\bd\mathbf{T}+\mathcal{M}\mathbf{T}=\mathbf{0} \\
-&\Leftrightarrow (\bd-\mathcal{M})\mathbf{T}=\mathbf{b} \\
-&\Leftrightarrow \mathbf{T}^\star=(\bd-\mathcal{M})^{-1}\mathbf{b}
-\end{aligned}
-$$
-given, of course, that $\bd-\mathcal{M}$ (or, equivalently, $\mathcal{M}-\bd$) is invertible.. 
-\vfill
-Is it?
-\end{frame}
-
-\begin{frame}{Nonsingularity of $\mathcal{M}-\bd$}
-Using the spectrum shift of Theorem~\ref{prop:behaviour_Mc}{(1)}
-\[
-s\left(\mathcal{M}-\min_{p\in\mathcal{P}}d_p\right)=-\min_{p\in\mathcal{P}}d_p
-\]
-This gives a constraint: for total population to behave well (in general, we want this), we \emph{must assume all death rates are positive}
-\vfill
-Assume they are (in other words, assume $\bd$ nonsingular). Then $\mathcal{M}-\bd$ is nonsingular and $\bT^\star=(\bd-\mathcal{M})^{-1}\mathbf{b}$ unique
-\end{frame}
-
-
-\begin{frame}{Behaviour of the total population}
-\framesubtitle{Equal irreducible movement case}
-$\mathbf{T}^\star=(\bd-\mathcal{M})^{-1}\mathbf{b}$ attracts solutions of
-$$
-\mathbf{T}'=\mathbf{b}-\bd\mathbf{T}+\mathcal{M}\mathbf{T}=:f(\mathbf{T})
-$$
-\vfill
-Indeed, we have
-$$
-Df=\mathcal{M}-\bd
-$$
-\vfill
-Since we now assume that $\bd$ is nonsingular, we have by Theorem~\ref{prop:behaviour_Mc}{(1)} that $s(\mathcal{M}-\min_{p\in\mathcal{P}}d_p)=-\min_{p\in\mathcal{P}}d_p<0$
-\vfill
-$\mathcal{M}$ irreducible $\rightarrow$ $\mathbf{T}^\star\gg 0$ (provided $\mathbf{b}>\mathbf{0}$, of course)
-\end{frame}
-
-
-\begin{frame}{Behaviour of total population}
-\framesubtitle{Equal reducible movement case}
-\begin{theorem}
-Assume $\mathcal{M}$ reducible. Let $a$ be the number of minimal absorbing sets in the corresponding connection graph $\mathcal{G}(\mathcal{M})$. Then
-\begin{enumerate}
-	\item The spectral abscissa $s(\mathcal{M})=0$ has multiplicity $a$
-	\item Associated to $s(\mathcal{M})$ is a nonnegative eigenvector $\mathbf{v}$ s.t.
-	\begin{itemize}
-		\item $v_i>0$ if $i$ is a vertex in a minimal absorbing set
-		\item $v_i=0$ if $i$ is a transient vertex
-	\end{itemize}
-\end{enumerate}
-\end{theorem}
-
-\vfill
-From Foster and Jacquez, \href{https://doi.org/10.1016/0025-5564(75)90096-6}{Multiple zeros for eigenvalues and the multiplicity of traps of a linear compartmental system}, \emph{Mathematical Biosciences} (1975)
-\end{frame}
-
-
-\begin{frame}{The not-so-nice case}
-Recall that
-$$
-\bT'=\mathbf{b}-\bd\bT+\sum_{c\in\C}\mathcal{M}_c\bN_{c}
-$$
-
-Suppose movement rates \textbf{similar for all compartments}, i.e., the zero/nonzero patterns in all matrices are the same but not the entries
-
-Let
-$$
-\underline{\mathcal{M}}=\left[\min_{X\in\{S,L,I,R\}}m_{Xpq}\right]_{pq,p\neq q}\qquad 
-\underline{\mathcal{M}}=\left[\max_{X\in\{S,L,I,R\}}m_{Xpq}\right]_{pq,p=q}
-$$
-and
-$$
-\overline{\mathcal{M}}=\left[\max_{X\in\{S,L,I,R\}}m_{Xpq}\right]_{pq,p\neq q}\qquad
-\overline{\mathcal{M}}=\left[\min_{X\in\{S,L,I,R\}}m_{Xpq}\right]_{pq,p=q}
-$$
-\end{frame}
-
-
-\begin{frame}{Cool, no? No!}
-Then we have
-$$
-\mathbf{b}-\bd\mathbf{T}+\underline{\mathcal{M}}\mathbf{T}\leq\mathbf{T}'\leq\mathbf{b}-\bd\mathbf{T}+\overline{\mathcal{M}}\mathbf{T}
-$$
-\vfill
-Me, roughly every 6 months: \emph{Oooh, coooool, a linear differential inclusion!}
-\vfill
-Me, roughly 10 minutes after that previous statement: \emph{Quel con!} 
-\vfill
-Indeed $\underline{\mathcal{M}}$ and $\overline{\mathcal{M}}$ are \textbf{are not} movement matrices  (in particular, their column sums are not all zero)
-\vfill
-So no luck there.. 
-\vfill
-However, we can still do stuff, but more on a case-by-case basis
-\end{frame}
-
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%
 \subsection{The models considered}
 \newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 
 
-\frame{\frametitle{The toy SLIRS model in patches}
+\frame{\frametitle{The prototype SLIRS used in patches}
 \begin{center}
 	\begin{tikzpicture}[scale=1, every node/.style={transform shape},
 		auto, %node distance = 2cm, auto,
@@ -642,14 +268,14 @@ However, we can still do stuff, but more on a case-by-case basis
 		\node [box] at (4,2) (I) {$I$};
 		\node [box] at (6,2) (R) {$R$};
 		%% Flows
-		\path [line, thick] (-1.5,2) to node [midway, above] (TextNode) {$B(N)$} (S);
+		\path [line, thick] (-1.5,2) to node [midway, above] (TextNode) {$\mathcal{B}(N)$} (S);
 		\path [line, thick] (S) to node [midway, above, sloped] (TextNode) {$\Phi$} (L);
 		\path [line, thick] (L) to node [midway, above] (TextNode) {$\varepsilon L$} (I);
 		\path [line, thick] (I) to node [sloped, midway, above] (TextNode) {$\gamma I$} (R);
 		\draw [>=latex,->, thick, rounded corners] (R) -- +(0,0.75) -- ++(-6,0.75) node[midway, above] {$\nu R$} -- (S);
 		\path [line, thick] (S) to node [midway, right] (TextNode) {$dS$} ++(0,-1);
 		\path [line, thick] (L) to node [midway, right] (TextNode) {$dL$} ++(0,-1);
-		\path [line, thick] (I) to node [midway, right] (TextNode) {$(d+\delta)I$} ++(0,-1);
+		\path [line, thick] (I) to node [midway, right] (TextNode) {$dI$} ++(0,-1);
 		\path [line, thick] (R) to node [midway, right] (TextNode) {$dR$} ++(0,-1);
 	\end{tikzpicture}
 \end{center}
@@ -657,7 +283,7 @@ However, we can still do stuff, but more on a case-by-case basis
 \begin{align}
 S' &= \B(N)+\nu R-\Phi-dS \\
 L' &= \Phi-(\varepsilon+d)L\\
-I' &= \varepsilon L-(\gamma+d+\delta)I\\
+I' &= \varepsilon L-(\gamma+d)I\\
 R' &= \gamma I-(\nu+d)R
 \end{align}
 \end{subequations}
@@ -675,7 +301,7 @@ Mass action, $\Phi=\beta SI$, proportional incidence, $\Phi=\beta SI/N$
 \begin{subequations}
 	\label{sys:pSLIRS}
 	\begin{align}
-		S_{p}' &=\mathcal{B}_p\left(N_p\right)+\nu_pR_p-\Phi_p-d_pS_p 
+		S_{p}' &=\B\left(N_p\right)+\nu_pR_p-\Phi_p-d_pS_p 
 		\color{red}{+\textstyle{\sum_{q\in\mathcal{P}}} m_{Spq}S_{q}} 
 		\label{sys:pSLIRS_dS} \\
 		L_{p}' &=\Phi_p-\left( \varepsilon_{p}+d_{p}\right)L_{p}
@@ -788,11 +414,11 @@ $\ldots$
 }
 
 \begin{frame}{Analysis -- Toy system}
-For simplicity, consider $|\mathcal{P}|$-SLIRS with $\mathcal{B}_p(N_p)=\mathcal{B}_p$
+For simplicity, consider $|\mathcal{P}|$-SLIRS with $\mathcal{B}_p(N_p)=b_p$
 \begin{subequations}
 	\label{sys:pSLIRS_toy}
 	\begin{align}
-		S_{p}' &=\mathcal{B}_p-\Phi_p-d_pS_p+\nu_pR_p
+		S_{p}' &=b_p-\Phi_p-d_pS_p+\nu_pR_p
 		+\textstyle{\sum_{q\in\mathcal{P}}} m_{Spq}S_{q} 
 		\label{sys:pSLIRS_toy_dS} \\
 		L_{p}' &=\Phi_p-\left( \varepsilon_{p}+d_{p}\right)L_{p}
@@ -807,7 +433,7 @@ For simplicity, consider $|\mathcal{P}|$-SLIRS with $\mathcal{B}_p(N_p)=\mathcal
 	\end{align}
 	with incidence
 	\begin{equation}
-		\Phi_p=\beta_p\frac{S_pI_p}{N_p^{q_p}},\qquad q_p\in\{0,1\}
+		\Phi_p=\beta_pS_pI_p
 		\label{sys:pSLIRS_toy_incidence} 
 	\end{equation}			
 \end{subequations}
@@ -830,6 +456,335 @@ $\implies$ Good case of large-scale system
 (matrix analysis is your friend)
 
 \end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+\subsection{Going to vector form}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\frame{\frametitle{Notation}
+\begin{itemize}
+	\item $X_{cp}(t)$ number of individuals of compartment $c$ in location $p$ at time $t$
+	\vfill
+	(Here and elsewhere: omit dependence on $t$ unless it causes confusion)
+	\vfill
+	\item $\bX_c=\left(X_{c1},\ldots,X_{c|\P|}\right)^T$ distribution of individuals of compartment $c\in\C$ among the different locations 
+	\newline
+	[E.g., for \eqref{sys:pSLIRS_toy}, $\bX_S=(S_1,\ldots,S_{|\P|})^T$]
+	\vfill
+	\item $\bX^p=\left(X_1^p,\ldots,X_{|\P|}^p\right)^T$ composition of the population in location $p\in\P$
+	\newline
+	[E.g., for \eqref{sys:pSLIRS_toy}, $\bX^p=(S_p,L_p,I_p,R_p)^T$]
+\end{itemize}
+}
+
+\frame{\frametitle{Metapopulation models with linear movement}
+Use a linear autonomous movement operator
+\vfill
+Then, for a given compartment $c\in\C$ and in a given location $p\in\P$
+\[
+	X_{cp}'=f_{cp}(\bX^p)
+	+\sum\dind{q\in\P}{q\neq p}m_{cpq}X_{cq} 
+	-\left(\sum\dind{q\in\P}{q\neq p}m_{cqp}\right)X_{cp}
+\]
+where $m_{cpq}$ rate of movement of individuals in compartment $c\in\C$ from location $q\in\P$ to location $p\in\P$
+}
+
+\begin{frame}{A more compact notation}
+	To make 
+	\[
+		X_{cp}'=f_{cp}(\bX^p)
+		+\sum\dind{q\in\P}{q\neq p}m_{cpq}X_{cq} 
+		-\left(\sum\dind{q\in\P}{q\neq p}m_{cqp}\right)X_{cp}
+	\]
+	more compact, denote the rate of leaving location $p$ as
+	\begin{equation}
+		m_{cpp} = -\sum\dind{q\in\P}{q\neq p}m_{cqp}
+	\end{equation}
+	Then
+	\begin{equation}\label{eq:general_metapop_linear_migration}
+		X_{cp}'=f_{cp}(\bX^p)+\sum_{q\in\P}m_{cpq}X_{cq}
+	\end{equation}
+\end{frame}
+
+\begin{frame}{Vector form of the system}
+For compartment $c\in\C$,
+\begin{equation}\label{eq:general_metapop}
+\bX_c'=f(\bX)+\mathcal{M}_c\bX_c
+\end{equation}
+with
+\begin{equation}\label{eq:movement_matrix}
+\mathcal{M}_c =
+\begin{pmatrix}
+-\sum\limits_{k\in\P}m_{ck1} & m_{c12} & \cdots & m_{c1|\P|} \\
+& & & \\
+m_{c|\P|1} & m_{c|\P|2} & \cdots & -\sum\limits_{k\in\P}m_{ck|\P|}
+\end{pmatrix}
+\end{equation}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%
+\subsection{The movement matrix}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+\begin{frame}{Definitions and notation for matrices}
+\begin{itemize}
+	\item $M\in\mathbb{R}^{n\times n}$ a square matrix with entries denoted $m_{ij}$
+	\vfill
+	\item $M\geq\mathbf{0}$ if $m_{ij}\geq 0$ for all $i,j$ (could be the zero matrix); $M>\mathbf{0}$ if $M\geq\mathbf{0}$ and $\exists i,j$ with $m_{ij}>0$; $M\gg\mathbf{0}$ if $m_{ij}>0$ $\forall i,j=1,\ldots,n$. Same notation for vectors
+	\vfill
+	\item $\sigma(M)=\{\lambda\in\mathbf{C}; M\lambda=\lambda\mathbf{v}, \mathbf{v}\neq\mathbf{0}\}$ \textbf{spectrum} of $M$
+	\vfill
+	\item $\rho(M)=\max_{\lambda\in\sigma(M)}\{|\lambda|\}$ \textbf{spectral radius}
+	\vfill
+	\item $s(M)=\max_{\lambda\in\sigma(M)}\{\Re(\lambda)\}$ \textbf{spectral abscissa} (or \textbf{stability modulus})
+	\vfill
+	\item $M$ is an \textbf{M-matrix} if it is a \textbf{Z-matrix} ($m_{ij}\leq 0$ for $i\neq j$) and $M = s\mathbb{I}-A$, with $A\geq 0$ and $s\geq \rho(A)$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{The movement matrix}
+	The matrix
+	\begin{equation}\tag{\ref{eq:movement_matrix}}
+		\mathcal{M}_c =
+		\begin{pmatrix}
+		-\sum\limits_{k\in\P}m_{ck1} & m_{c12} & \cdots & m_{c1|\P|} \\
+		& & & \\
+		m_{c|\P|1} & m_{c|\P|2} & \cdots & -\sum\limits_{k\in\P}m_{ck|\P|}
+		\end{pmatrix}
+	\end{equation}
+	is the \textbf{movement matrix}
+	\vfill
+	It plays an extremely important role in the analysis of metapopulation systems, so we'll spend some time discussing its properties
+	\vfill
+$\mathcal{M}_c$ describes
+\begin{itemize} 
+\item existence of connections
+\item when they exist, their ``intensity''
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Properties of the movement matrix $\M$}
+	First, remark $-\M_c$ is a Laplacian matrix
+	\vfill
+	\begin{lemma}\label{lemma:behaviour_Mc}
+		\begin{enumerate}
+			\item $0\in\sigma(\M)$ corresponding to left e.v. $\11^T$ \hfill[$\sigma$ spectrum]
+			\item $-\M$ is a singular M-matrix
+			\item $0=s(\M)\in\sigma(\M)$ \hfill[$s$ spectral abscissa]
+			\item If $\M$ irreducible, then $s(\M)$ has multiplicity 1
+		\end{enumerate}
+	\end{lemma}
+	\vfill
+	For complete proof of Lemma~\ref{lemma:behaviour_Mc} and Proposition~\ref{prop:behaviour_Mc} (next page), see \href{http://dx.doi.org/10.1007/s11538-019-00593-1}{Arino, Bajeux \& Kirkland, BMB 2019}
+\end{frame}
+
+\begin{frame}
+	\begin{proposition}[$D$ a diagonal matrix]
+		\label{prop:behaviour_Mc}
+		\begin{enumerate}
+			\item $s(\M+d\II)=d$, $\forall d\in\IR$
+			\item $s(\M+D)\in\sigma(\M+D)$ associated to $\bv>\b0$. If $\M$ irreducible, $s(\M+D)$ has  multiplicity 1 and is associated to $\bv\gg \b0$
+			\item If $\diag (D)\gg \b0$, then $D-\M$ invertible M-matrix and $(D-\M)^{-1}> \b0$
+			\item $\M$ irreducible and $\diag(D)>\b0$ $\Longrightarrow$ $D-\M$ nonsingular irreducible M-matrix and $(D-\M)^{-1}\gg \b0$		
+		\end{enumerate}
+	\end{proposition}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%
+\subsection{Behaviour of the mobility component}
+\newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
+
+
+\frame{\frametitle{Behaviour of the mobility component -- No demography}
+Assume no within-location dynamics, just movement. Then \eqref{eq:general_metapop} takes the form
+\begin{equation}\label{eq:mobility_compartment}
+	\bX_c' = \mathcal{M}_c\bX_c
+\end{equation}
+\vfill
+\begin{theorem}\label{th:GAS_metapop1}
+For a given compartment $c\in\C$, suppose that the movement matrix $\M_c$ is irreducible. Then for any $\bX_c(0)>0$, \eqref{eq:mobility_compartment} satisfies
+\[
+\lim_{t\to\infty}\bX_c(t)=\bX_c^\star\gg 0
+\]
+\end{theorem}
+\vfill
+Note that $\bX_c^\star$ depends on $\langle\nbOne,\bX_c(0)\rangle$
+}
+
+
+\begin{frame}{Reduction to total population per location -- Demography}
+Let 
+\[
+	T_p = \sum_{c\in\C}X_{cp}
+\]
+be the total population in location $p$
+\vfill
+It is often posssible to obtain, in each location $p\in\P$, an equation for the evolution of the total population that takes the form
+\begin{equation}\label{eq:dT_total_population}
+	T_p' = 
+	D_p(T_p)+\sum_{c\in\C}\sum_{q\in\P}m_{cpq}X_{cq}
+\end{equation}
+where $D_p(T_p)$ describes the demography in location $p$
+\end{frame}
+
+\begin{frame}{Nature of the demography}
+	Most common types of demographic functions
+	\begin{itemize}
+		\item $D_p(T_p)=b_p-d_pT_p$ (asymptotically constant population)
+		\item $D_p(T_p)=b_pT_p-d_pT_p$ 
+		\item $D_p(T_p)=d_pT_p-d_pT_p=0$ (constant population)
+		\item $D_p(T_p)=r_pT_p(1-T_p/K_p)$ (logistic demography)
+	\end{itemize}
+	\vfill
+	In what follows, assume 
+	\begin{equation}\label{eq:demography_function}
+		D_p(T_p)=b_p-d_pT_p
+	\end{equation}
+\end{frame}
+
+\begin{frame}{Vector / matrix form of the equation}
+Assuming demography is of the form \eqref{eq:demography_function}, write \eqref{eq:dT_total_population} in vector form
+\begin{equation}\label{sys:dN_general} 
+	\mathbf{T}'=\mathbf{b}-\bd\bT+\sum_{c\in\C}\mathcal{M}_c\bX_{c}	
+\end{equation}
+where 
+\begin{itemize}
+	\item $\mathbf{b}=(b_1,\ldots,b_{|\mathcal{P}|})^T\in\IR^{|\P|}$
+	\item $\mathbf{T}=(T_1,\ldots,T_{|\mathcal{P}|})^T\in\IR^{|\P|}$
+	\item $\mathbf{X}=(X_{c1},\ldots,X_{c{|\mathcal{P}|}})^T\in\IR^{|\P|}$
+	\item $\bd=\mathsf{diag}\left(d_1,\ldots,d_{|\mathcal{P}|}\right)\in\IR^{|\mathcal{P}|\times|\mathcal{P}|}$
+	\item $\mathcal{M}_c\in\IR^{|\mathcal{P}|\times|\mathcal{P}|}$
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{The nice case}
+Suppose movement rates \textbf{equal for all compartments}, i.e.,
+$$
+\M_c\equiv\M
+$$
+\vfill
+(stronger than the property of movement being \emph{similar for all compartments}, which only requires zero/nonzero patterns in all $\M_c$, $c\in\C$, to be the same)
+\vfill
+Then
+\begin{align}
+\bT' &= \bb-\bd\bT+\M\sum_{c\in\C}\bN_{c} \nonumber \\
+&= \bb-\bd\bT+\M\bT \label{sys:pSLIRS_toy_dN}
+\end{align}
+\end{frame}
+
+
+\begin{frame}{Equilibria}
+$$
+\begin{aligned}
+\bT'=\b0 &\Leftrightarrow \mathbf{b}-\bd\mathbf{T}+\mathcal{M}\mathbf{T}=\mathbf{0} \\
+&\Leftrightarrow (\bd-\mathcal{M})\mathbf{T}=\mathbf{b} \\
+&\Leftrightarrow \mathbf{T}^\star=(\bd-\mathcal{M})^{-1}\mathbf{b}
+\end{aligned}
+$$
+given, of course, that $\bd-\mathcal{M}$ (or, equivalently, $\mathcal{M}-\bd$) is invertible.. 
+\vfill
+Is it?
+\end{frame}
+
+\begin{frame}{Nonsingularity of $\mathcal{M}-\bd$}
+Using the spectrum shift of Theorem~\ref{prop:behaviour_Mc}{(1)}
+\[
+s\left(\mathcal{M}-\min_{p\in\mathcal{P}}d_p\right)=-\min_{p\in\mathcal{P}}d_p
+\]
+This gives a constraint: for total population to behave well (in general, we want this), we \emph{must assume all death rates are positive}
+\vfill
+Assume they are (in other words, assume $\bd$ nonsingular). Then $\mathcal{M}-\bd$ is nonsingular and $\bT^\star=(\bd-\mathcal{M})^{-1}\mathbf{b}$ unique
+\end{frame}
+
+
+\begin{frame}{Behaviour of the total population}
+\framesubtitle{Equal irreducible movement case}
+$\mathbf{T}^\star=(\bd-\mathcal{M})^{-1}\mathbf{b}$ attracts solutions of
+$$
+\mathbf{T}'=\mathbf{b}-\bd\mathbf{T}+\mathcal{M}\mathbf{T}=:f(\mathbf{T})
+$$
+\vfill
+Indeed, we have
+$$
+Df=\mathcal{M}-\bd
+$$
+\vfill
+Since we now assume that $\bd$ is nonsingular, we have by Theorem~\ref{prop:behaviour_Mc}{(1)} that $s(\mathcal{M}-\min_{p\in\mathcal{P}}d_p)=-\min_{p\in\mathcal{P}}d_p<0$
+\vfill
+$\mathcal{M}$ irreducible $\rightarrow$ $\mathbf{T}^\star\gg 0$ (provided $\mathbf{b}>\mathbf{0}$, of course)
+\end{frame}
+
+
+\begin{frame}{Behaviour of total population}
+\framesubtitle{Equal reducible movement case}
+\begin{theorem}
+Assume $\mathcal{M}$ reducible. Let $a$ be the number of minimal absorbing sets in the corresponding connection graph $\mathcal{G}(\mathcal{M})$. Then
+\begin{enumerate}
+	\item The spectral abscissa $s(\mathcal{M})=0$ has multiplicity $a$
+	\item Associated to $s(\mathcal{M})$ is a nonnegative eigenvector $\mathbf{v}$ s.t.
+	\begin{itemize}
+		\item $v_i>0$ if $i$ is a vertex in a minimal absorbing set
+		\item $v_i=0$ if $i$ is a transient vertex
+	\end{itemize}
+\end{enumerate}
+\end{theorem}
+
+\vfill
+From Foster and Jacquez, \href{https://doi.org/10.1016/0025-5564(75)90096-6}{Multiple zeros for eigenvalues and the multiplicity of traps of a linear compartmental system}, \emph{Mathematical Biosciences} (1975)
+\end{frame}
+
+
+\begin{frame}{The not-so-nice case}
+Recall that
+$$
+\bT'=\mathbf{b}-\bd\bT+\sum_{c\in\C}\mathcal{M}_c\bX_{c}
+$$
+
+Suppose movement rates \textbf{similar for all compartments}, i.e., the zero/nonzero patterns in all matrices are the same but not the entries
+
+Let
+$$
+\underline{\mathcal{M}}=\left[\min_{c\in\C}m_{cpq}\right]_{pq,p\neq q}\qquad 
+\underline{\mathcal{M}}=\left[\max_{c\in\C}m_{cpq}\right]_{pq,p=q}
+$$
+and
+$$
+\overline{\mathcal{M}}=\left[\max_{c\in\C}m_{cpq}\right]_{pq,p\neq q}\qquad
+\overline{\mathcal{M}}=\left[\min_{c\in\C}m_{cpq}\right]_{pq,p=q}
+$$
+\end{frame}
+
+
+\begin{frame}{Cool, no? No!}
+Then we have
+$$
+\mathbf{b}-\bd\mathbf{T}+\underline{\mathcal{M}}\mathbf{T}\leq\mathbf{T}'\leq\mathbf{b}-\bd\mathbf{T}+\overline{\mathcal{M}}\mathbf{T}
+$$
+\vfill
+Me, roughly every 6 months: \emph{Oooh, coooool, a linear differential inclusion!}
+\vfill
+Me, roughly 10 minutes after making that previous statement: \emph{Quel con!} 
+\vfill
+Indeed $\underline{\mathcal{M}}$ and $\overline{\mathcal{M}}$ are \textbf{are not} movement matrices  (in particular, their column sums are not all zero)
+\vfill
+So no luck there.. 
+\vfill
+However, we can still do stuff, but more on a case-by-case basis
+\end{frame}
+
+
+
+
 
 
 % %%%%%%%%%%%%%%%%%%%
@@ -894,7 +849,7 @@ Assumption form now on: existence and uniqueness
 % Consider behaviour of $N_p=S_p+L_p+I_p+R_p$. We have
 % $$
 % \begin{aligned}
-% N_p' &=\mathcal{B}_p\cancel{-\Phi_p}-d_pS_p\cancel{+\nu_pR_p}
+% N_p' &=b_p\cancel{-\Phi_p}-d_pS_p\cancel{+\nu_pR_p}
 % +\textstyle{\sum_{q\in\mathcal{P}}} m_{Spq}S_{q} \\
 % &\quad \cancel{+\Phi_p}-\left(\cancel{\varepsilon_{p}}
 % +d_{p}\right)L_{p}
@@ -1081,7 +1036,7 @@ Here, we want to find the DFE for the $|\P|$-location model. Later, the existenc
 \begin{frame}{}
 Assume \eqref{sys:pSLIRS_toy} at metapopulation DFE. Then $\Phi_p=0$ and 
 \begin{align*}
-0 &=\mathcal{B}_p-d_pS_p+\nu_pR_p
+0 &=b_p-d_pS_p+\nu_pR_p
 +\textstyle{\sum_{q\in\mathcal{P}}} m_{Spq}S_{q} \\
 0 &=-\left(\nu_{p}+d_{p}\right)R_{p}
 +\textstyle{\sum_{q\in\mathcal{P}}} m_{Rpq}R_{q}
@@ -1267,12 +1222,12 @@ V^{-1}
 \end{pmatrix}
 $$
 where
-\begin{multline*}
+\[
 	\tilde V_{21}^{-1}=
-	\left(\mathsf{diag}_p(\varepsilon_p+d_p)-\mathcal{M}^L\right)^{-1}\\ 
+	\left(\mathsf{diag}_p(\varepsilon_p+d_p)-\mathcal{M}^L\right)^{-1}
 	\mathsf{diag}_p(\varepsilon_p)
 	\left(\mathsf{diag}_p(\gamma_p+d_p)-\mathcal{M}^I\right)^{-1}		
-\end{multline*}
+\]
 \end{frame}
 
 \begin{frame}{$\R_0$ as $\rho(FV^{-1})$}
@@ -2148,6 +2103,16 @@ T = matrix(data = c(0, 1268, 900, 489, 200,
 @
 \end{frame}
 
+\begin{frame}[fragile]{Computing birth and death rates}
+Average life expectancy at birth (years): 81.30, 78.59, 67.74, 66.43, 72.19
+<<>>=
+pop = c(34.017, 1348.932, 1224.614, 173.593, 93.261) * 1e+06
+countries = c("Canada", "China", "India", "Pakistan", "Philippines")
+death_rates = 1/(365.25*c(81.30, 78.59, 67.74, 66.43, 72.19))
+birth_rates = pop*death_rates
+@
+\end{frame}
+
 \begin{frame}[fragile]{Work out movement matrix}
 Use the approximation explained in Arino \& Portet (JMB 2015)
 <<>>=
@@ -2170,6 +2135,9 @@ For simplicity, let's assume all movement rates are equal
 p$P = dim(p$M)[1]
 p$epsilon = rep((1/1.5), p$P)
 p$gamma = rep((1/5), p$P)
+p$nu = rep((1/365.25), p$P)
+p$b = birth_rates
+p$d = death_rates
 # The desired values for R_0
 R_0 = rep(1.5, p$P)
 @	
@@ -2201,22 +2169,81 @@ tspan = seq(from = 0, to = 5 * 365.25, by = 0.1)
 @
 \end{frame}
 
+\begin{frame}{Computing $\R_0$ in patches in isolation to set up $\beta$}
+Useful to know $\R_{0p}$, basic reproduction numnber for patch $p\in\P$ disconnected from the network
+\vfill
+In the absence of movement, system in $p\in\P$ is
+\begin{subequations}
+	\label{sys:pSLIRS_toy_isolated}
+	\begin{align}
+		S_{p}' &=b_p-\beta_pS_pI_p-d_pS_p+\nu_pR_p 
+		\label{sys:pSLIRS_toy_isolated_dS} \\
+		L_{p}' &=\beta_pS_pI_p-\left( \varepsilon_{p}+d_{p}\right)L_{p}
+		\label{sys:pSLIRS_toy_isolated_dL} \\
+		I_{p}' &=\varepsilon_pL_p-(\gamma_p+d_p)I_p
+		\label{sys:pSLIRS_toy_isolated_dI} \\
+		R_{p}' &=\gamma _{p}I_{p}-\left(\nu_{p}+d_{p}\right)R_{p}
+		\label{sys:pSLIRS_toy_isolated_dR} 
+	\end{align}
+\end{subequations}
+\end{frame}
+
+\begin{frame}
+DFE is clearly $(S_p,L_p,I_p,R_p)=(b_p/d_p,0,0,0)$
+\vfill
+Infected variables are $\I=\{L,I\}$
+\vfill
+\[
+\F = (\beta_p S_pI_p,0)^T
+\text{ and }
+\V = ((\varepsilon_p+d_p)L_p,-\varepsilon_pL_p+(\gamma_p+d_p)I_p)
+\]
+so
+\[
+F=\begin{pmatrix}
+0 & \beta_p\frac{b_p}{d_p} \\ 0 & 0
+\end{pmatrix}
+\text{ and }
+V=\begin{pmatrix}
+\varepsilon_p+d_p & 0 \\
+-\varepsilon_p & \gamma_p+d_p
+\end{pmatrix}
+\]
+\vfill
+Thus
+\[
+\R_{0p} = 
+\rho(FV^{-1})
+=\rho\left(
+\begin{pmatrix}
+0 & \beta_p\frac{b_p}{d_p} \\ 0 & 0
+\end{pmatrix}
+\frac{1}{(\varepsilon_p+d_p)(\gamma_p+d_p)}
+\begin{pmatrix}
+\gamma_p+d_p & 0 \\
+\varepsilon_p & \varepsilon_p+d_p
+\end{pmatrix}
+\right)
+\]
+and it follows that
+\begin{equation}\label{eq:R0p}
+\R_{0p}=
+\frac{\beta_p}{\gamma_p+d_p}\;
+\frac{\varepsilon_p}{\varepsilon_p+d_p}\;
+\frac{b_p}{d_p}
+\end{equation}
+\end{frame}
 
 \begin{frame}[fragile]{Set up $\beta$ to avoid blow up}
-	Let us take $\R_0=1.5$ for patches in isolation. Solve $\R_0$ for $\beta$ 
-	$$
-	\beta=\frac{\R_0}{S(0)}
-	\left(
-	\frac{1-\pi_p}{\gamma_{Ip}}
-	+\frac{\pi_p\eta_p}{\gamma_{Ap}}
-	\right)^{-1}
-	$$ 
+	Let us take $\R_{0p}=1.5$ for patches in isolation. Solve \eqref{eq:R0p} for $\beta_p$:
+	\[
+	\beta_p=\frac{\R_{0p}(\gamma_p+d_p)(\varepsilon_p+d_p)d_p}{\varepsilon_pb_p}
+	\]
 <<>>=
 for (i in 1:p$P) {
   p$beta[i] = 
-    R_0[i] / S0[i] * 1 / 
-    ((1 - p$pi[i])/p$gammaI[i] + 
-       p$pi[i] * p$eta[i]/p$gammaA[i])
+    R_0[i] *(p$gamma[i]+p$d[i]) * (p$epsilon[i]+p$d[i]) * p$d[i] / 
+    (p$espilon[i]*p$d[i])
 }
 @	
 \end{frame}
@@ -2228,17 +2255,13 @@ SLIAR_metapop_rhs <- function(t, x, p) {
 		S = x[idx_S]
 		L = x[idx_L]
 		I = x[idx_I]
-		A = x[idx_A]
 		R = x[idx_R]
-		N = S + L + I + A + R
-		Phi = beta * S * (I + eta * A) / N
-		dS = - Phi + M %*% S
-		dL = Phi - epsilon * L + p$M %*% L
-		dI = (1 - pi) * epsilon * L - gammaI * I + M %*% I
-		dA = pi * epsilon * L - gammaA * A + M %*% A
-		dR = gammaI * I + gammaA * A + M %*% R
-		dx = list(c(dS, dL, dI, dA, dR))
-		return(dx)
+		Phi = beta*S*I
+		dS = b - d*S - Phi + M%*%S
+		dL = Phi - (epsilon+d)*L + M%*%L
+		dI = epsilon*L - (gamma+d)*I + M%*%I
+		dR = gamma*I + - (nu+d)*R + M%*%R
+		return(list(c(dS, dL, dI, dR)))
 	})
 }	
 @
@@ -2250,7 +2273,7 @@ SLIAR_metapop_rhs <- function(t, x, p) {
 # Call the ODE solver
 sol <- ode(y = IC, 
 			times = tspan, 
-			func = SLIAR_metapop_rhs, 
+			func = SLIRS_metapop_rhs, 
 			parms = p,
 			method = "ode45")
 @
@@ -2291,7 +2314,7 @@ $\implies$ use this for numerics, not for the mathematical analysis
 
 %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%
-\subsection{Spatial propagation on a ``road''}
+\subsection{Something not metapopulation -- Spatial propagation on a ``road''}
 \newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 
 \maxFrameImage{FIGS/LopezCoutinhoBurratiniMassad-1999.png}
@@ -2408,7 +2431,7 @@ Show there exists a threshold $z_{\text{threshold}}=\R_0$ s.t. $\lambda(x)\equiv
 %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%
-\subsection{A diffusion-type spatial spread model}
+\subsection{Something not metapopulation -- A diffusion spatial spread model}
 \newSubSectionSlide{FIGS-slides-admin/Gemini_Generated_Image_vqpscpvqpscpvqps.jpeg}
 
 \maxFrameImage{FIGS/MurraySeward-1992.png}
